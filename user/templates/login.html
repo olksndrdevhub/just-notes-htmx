@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login | 
+{% endblock title %}
+
+{% block content %}
+    <div class="px-[10vw]">
+        <h1 class="font-bold text-3xl mb-5 text-center">Login</h1>
+        <form action="#"
+            hx-post="{% url 'login_view' %}"
+            hx-swap="none"
+            class="flex flex-col space-y-5 mb-2">
+            <span class="flex flex-col space-y-3">
+                <label for="email">Email</label>
+                <input required type="email" name="email" id="email" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">    
+            </span>
+            <span class="flex flex-col space-y-3">
+                <label for="password">Password</label>
+                <input required type="password" name="password" id="password" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">
+            </span>
+            <button type="submit" class="p-2 border-2 rounded-md text-orange-300 hover:text-orange-500 border-orange-300 hover:border-orange-500 bg-gray-600 hover:bg-gray-800 hover:cursor-pointer">Login</button>
+        </form>
+        Don't have account? <a href="{% url 'register_view' %}" class="font-bold text-orange-300 hover:text-orange-500">Register now!</a>
+    </div>
+{% endblock content %}
