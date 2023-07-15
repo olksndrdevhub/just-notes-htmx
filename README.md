@@ -15,14 +15,15 @@
 
 ### Functionality:
 
-    - [*] Register/Login
-    - [*] Profile Page:
-        - [*] Profile Details update
-    - [*] Home (Notes) Page:
-        - [*] List All Notes
-        - [*] Create new Note
-        - [*] Update Note
-        - [*] Delete Note
-        - [*] Bulk Actions on Notes:
-            - [*] Bulk Delete seleted Notes
-            - [*] Bulk Change 'Completed' Status on selected Notes
+- [ ] Register/Login
+- [ ] Profile Page:
+    - [ ] Profile Details update
+- [ ] Home (Notes) Page:
+    - [ ] List All Notes
+    - [ ] Create new Note
+    - [ ] Update Note
+    - [ ] Delete Note
+    - [ ] Bulk Actions on Notes:
+        - [ ] Bulk Delete seleted Notes
+        - [ ] Bulk Change 'Completed' Status on selected Notes
+- [ ] Toasts Application to show Django Messages with HTMX
