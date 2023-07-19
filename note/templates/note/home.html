@@ -23,7 +23,7 @@
         <h1 class="font-bold text-3xl">Your Notes</h1>
         <p id="notes-total" class="text-3xl text-gray-400">Total: <strong class="text-white font-semibold">{{ notes.count }}</strong></p>
     </span>
-    <div x-show="multipleSelectActive" class="bg-gray-600 flex mb-5 p-3 rounded-lg justify-between sm:items-center">
+    <div x-show="multipleSelectActive" class="bg-[var(--background-lighter)] flex mb-5 p-3 rounded-lg justify-between sm:items-center">
         <input type="hidden" name="selected-notes-ids" x-model="selectedNotesIds">
         <input type="hidden" name="bulk-notes-action" value="bulk_delete">
         <div class="flex flex-col sm:flex-row justify-between sm:items-center">
@@ -46,7 +46,7 @@
                 hx-include="[name='selected-notes-ids']"
                 hx-swap="outerHTML"
                 x-on:click="multipleSelectActive = false; $nextTick(() => {selectAllNotes(reset=true)})"
-                class="w-auto flex justify-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                class="w-auto flex justify-center p-4 rounded-md bg-[var(--primary)] text-[var(--text-dark)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 Change Status
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -60,7 +60,7 @@
                 hx-select-oob="#notes-total"
                 hx-swap="outerHTML"
                 x-on:click="multipleSelectActive = false; $nextTick(() => {selectAllNotes(reset=true)})"
-                class="w-auto flex justify-center sm:ml-5 mt-2 sm:mt-0 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                class="w-auto flex justify-center sm:ml-5 mt-2 sm:mt-0 p-4 rounded-md bg-red-900 hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 Delete Selected
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -68,7 +68,7 @@
             </button>
             <button
                 x-on:click="selectAllNotes(reset=true)"
-                class="w-auto flex justify-center sm:ml-5 mt-2 sm:mt-0 text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
+                class="w-auto flex justify-center sm:ml-5 mt-2 sm:mt-0 p-4 rounded-md bg-[var(--secondary)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>                  
@@ -77,7 +77,7 @@
 
     </div>
     <div id="notes-container" class="notes-block grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[1vw]">
-        <a class="flex justify-center flex-col p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-green-900"
+        <a class="flex justify-center flex-col p-6 rounded-md bg-[var(--accent)] text-[var(--text-dark)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                 type="button"
                 href="#"
                 x-on:click="addNote"
@@ -91,7 +91,7 @@
                 
             </a>
         {% for note in notes %}
-            <a class="flex flex-col p-6 group bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-900"
+            <a class="flex flex-col p-6 group rounded-md bg-[var(--secondary)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                 type="button"
                 href="#"
                 id="note{{note.id}}"
@@ -130,7 +130,7 @@
     <div x-show="noteModalShow" x-transition id="note-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
         <div class="relative w-full max-w-2xl max-h-full">
             <!-- Modal content -->
-            <div id="note-body" x-on:click.outside="noteModalShow = false" class="relative bg-white z-50 rounded-lg shadow dark:bg-gray-700">
+            <div id="note-body" x-on:click.outside="noteModalShow = false" class="relative bg-[var(--background-lighter)] z-50 rounded-lg shadow">
                 <button x-on:click="noteModalShow = false" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="note-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -152,23 +152,27 @@
                                 type="text"
                                 name="title"
                                 id="title" 
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Your note text..." required>
+                                class="text-sm rounded-lg block w-full p-2.5 bg-[var(--background)] placeholder-gray-400 border-[var(--secondary)] border-2" placeholder="Your note text..." required>
                                 <div class="invalid-feedback">
                                     Please input a title.
                                 </div>
                         </div>
                         <div>
                             <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
-                            <textarea x-model="content" placeholder="Your note content..." name="content" id="contetn" cols="30" rows="10" class="w-full resize-none p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required></textarea>
+                            <textarea x-model="content" placeholder="Your note content..." name="content" id="contetn" cols="30" rows="10" class="w-full rounded-lg resize-none p-2.5 bg-[var(--background)] placeholder-gray-400 border-[var(--secondary)] border-2" required></textarea>
                             <div class="invalid-feedback">
                                 Please input a content.
                             </div>
                         </div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input id="completed" name="completed" type="checkbox" x-model="completed" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
+                                <div class="flex items-center px-2">
+                                    <input id="completed" type="checkbox" value="" name="completed" x-model="completed" class="w-4 h-4 text-[var(--accent)] focus:bg-[var(--accent)] border-[var(--accent)] rounded focus:ring-[var(--accent)] focus:ring-2">
+                                    <label for="completed" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Mark as Completed</label>
+                                </div>
+                                <!-- <input id="completed" name="completed" type="checkbox" x-model="completed" class="appearance-none w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"> -->
                             </div>
-                            <label for="completed" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Mark as Completed</label>
+                            <!-- <label for="completed" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Mark as Completed</label> -->
                         </div>
                         <div x-show="noteAction === 'update'" class="flex justify-between space-x-2">
                             <p class="font-light text-sm text-gray-400 dark:text-gray-300">Created: <span x-text="createdAt"></span></p>
@@ -177,7 +181,7 @@
                         <div class="flex justify-between space-x-2">
                             <button x-on:click="noteModalShow = false"
                                 type="button"
-                                class="w-full text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Cancel</button>
+                                class="w-full p-4 rounded-md bg-[var(--secondary)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Cancel</button>
                             <button x-show="noteAction === 'update'" x-on:click="confirmModalShow = true;noteModalShow = false"
                                 type="button" 
                                 class="w-16 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
@@ -185,7 +189,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
                             </button>
-                            <button name="update" type="button" class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                            <button name="update" type="button" class="w-full p-4 rounded-md bg-[var(--primary)] text-[var(--text-dark)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                                 hx-post="{% url 'note_view' %}"
                                 hx-target="#notes-container"
                                 hx-select="#notes-container"
@@ -203,7 +207,7 @@
     <!-- confirm modal -->
     <div x-show="confirmModalShow" x-transition id="popup-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
         <div class="relative w-full max-w-md max-h-full">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="relative bg-[var(--background-lighter)] rounded-lg shadow">
                 <button type="button"
                     x-on:click="confirmModalShow = false; noteModalShow = true"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">

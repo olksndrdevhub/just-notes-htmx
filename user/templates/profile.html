@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-<div class="px-[10vw]">
+<div class="px-[10vw] sm:px-[20vw] md:px-[30vw]">
     <h1 class="font-bold text-3xl mb-5 text-center">Your Profile</h1>
     <form
         id="profile-form"
@@ -15,34 +15,34 @@
         <span class="flex flex-col space-y-3">
             <label for="first_name">First name</label>
             <input required type="text" name="first_name" id="first_name"
-                class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text disabled:bg-gray-600 disabled:cursor-not-allowed"
+                class="text-sm border-[var(--secondary)] border-2 rounded-lg block w-full p-2.5 bg-[var(--background-lighter)] placeholder-gray-400 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600"
                 value="{{user.first_name}}"
                 x-bind:disabled="!edit">    
         </span>
         <span class="flex flex-col space-y-3">
             <label for="last_name">Last name</label>
             <input required type="text" name="last_name" id="last_name"
-                class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text disabled:bg-gray-600 disabled:cursor-not-allowed"
+                class="text-sm border-[var(--secondary)] border-2 rounded-lg block w-full p-2.5 bg-[var(--background-lighter)] placeholder-gray-400 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600"
                 value="{{user.last_name}}"
                 x-bind:disabled="!edit">    
         </span>
         <span class="flex flex-col space-y-3">
             <label for="email">Email</label>
             <input required type="email" name="email" id="email"
-                class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text disabled:bg-gray-600 disabled:cursor-not-allowed"
+                class="text-sm border-[var(--secondary)] border-2 rounded-lg block w-full p-2.5 bg-[var(--background-lighter)] placeholder-gray-400 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600"
                 value="{{user.email}}"
                 x-bind:disabled="!edit">    
         </span>
         <!-- <span class="flex flex-col space-y-3">
             <label for="password">Password</label>
-            <input required type="password" name="password" id="password" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">
+            <input required type="password" name="password" id="password" class="text-sm rounded-lg block w-full p-2.5 bg-[var(--background)] placeholder-gray-400hover:cursor-text">
         </span>
         <span class="flex flex-col space-y-3">
             <label for="password">Password again</label>
-            <input required type="password" name="password2" id="password2" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">
+            <input required type="password" name="password2" id="password2" class="text-sm rounded-lg block w-full p-2.5 bg-[var(--background)] placeholder-gray-400hover:cursor-text">
         </span> -->
         <a type="button" 
-            class="flex justify-center p-2 border-2 rounded-md text-gray-100 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:cursor-pointer"
+            class="flex justify-center w-full p-4 rounded-md bg-[var(--secondary)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
             x-on:click="edit=true"
             x-show="!edit">
             <span class="flex">
@@ -53,7 +53,7 @@
             </span>
         </a>
         <a type="submit" 
-            class="justify-center p-2 border-2 rounded-md text-gray-100 border-green-600 bg-green-600 hover:bg-green-500 hover:cursor-pointer"
+            class="justify-center w-full p-4 rounded-md bg-[var(--primary)] text-[var(--text-dark)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
             x-bind:class="edit ? 'flex' : 'hidden'"
             hx-post="{% url 'profile_view' %}"
             hx-select="#profile-form"
@@ -67,7 +67,7 @@
             </span>
         </a>
         <a type="button" 
-            class="justify-center p-2 border-2 rounded-md text-yellow-300 border-yellow-300 bg-gray-600 hover:bg-gray-800 hover:cursor-pointer"
+            class="justify-center w-full p-4 rounded-md bg-[var(--secondary)] text-[var(--text-light)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
             x-on:click="edit=false"
             x-bind:class="edit ? 'flex' : 'hidden'">
             <span class="flex">

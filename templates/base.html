@@ -13,10 +13,23 @@
     <script src="{% static 'alpine.min.js' %}" defer></script>
     {% block additional_head_links %}{% endblock additional_head_links %}
     {% block additional_css %}{% endblock additional_css %}
+    <style>
+        :root {
+            --text-light: #fdfcfd;
+            --text-dark: #050505;
+            --background: #0a0a0a;
+            --background-lighter: #141414;
+            --primary: #8ba687;
+            --secondary: #221a23;
+            --secondary-light: #372b3a;
+            --accent: #789772;
+        }
+
+    </style>
 </head>
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-gray-700 text-gray-100" x-data="{}">
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class=" bg-[var(--background)] text-[var(--text-light)]" x-data="{}">
     <header class="">
-        <nav class="flex justify-between h-20 bg-gray-800 px-[5vw] sm:px-[10vw]">
+        <nav class="flex justify-between bg-background h-20 px-[5vw] sm:px-[10vw]">
             <span class="logo flex items-center">
                 <a href="{% url 'home_view' %}">
                     <h1 class="font-bold text-[min(10vw,30px)]">Just Notes</h1>
@@ -26,52 +39,52 @@
                 <!-- <span class="self-center"> -->
                     {% if user.is_authenticated %}
                         {% if user.is_superuser %}
-                            <a class="mr-2 p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer"
+                            <a class="mr-2 p-4 rounded-md bg-[var(--secondary)] hover:bg-[var(--secondary-light)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                                 href="/admin">
                                 <span class="flex">
                                     Admin Panel
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2 stroke-orange-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
                                     </svg>
                                 </span>                                
                             </a>
                         {% endif %}
 
-                        <a class="mr-2 p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer"
+                        <a class="mr-2 p-4 rounded-md bg-[var(--secondary)] hover:bg-[var(--secondary-light)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                             href="{% url 'profile_view' %}">
                             <span class="flex">
                                 {{ user.get_full_name }}
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="" class="w-6 h-6 ml-2 stroke-orange-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
                             </span>
                         </a>
-                        <a class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer"
+                        <a class="p-4 rounded-md bg-[var(--secondary)] hover:bg-[var(--secondary-light)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                             href="{% url 'logout_view' %}">
                             <span class="flex">
                                 Log Out
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2 stroke-orange-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                                 </svg>                                 
                             </span>    
                         </a>
                     {% else %}
                     <a
-                        class="mr-2 p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer"
+                        class="mr-2 p-4 rounded-md bg-[var(--secondary)] hover:bg-[var(--secondary-light)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                         href="{% url 'login_view' %}">
                         <span class="flex">
                             Log In
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2 stroke-orange-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                             </svg>                              
                         </span>
                     </a>
                     <a
-                        class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-pointer"
+                        class="p-4 rounded-md bg-[var(--secondary)] hover:bg-[var(--secondary-light)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                         href="{% url 'register_view' %}">
                         <span class="flex">
                             Register
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2 stroke-orange-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
                             </svg>                              
                         </span>

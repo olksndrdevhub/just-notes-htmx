@@ -19,8 +19,8 @@
                 <label for="password">Password</label>
                 <input required type="password" name="password" id="password" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">
             </span>
-            <button type="submit" class="p-2 border-2 rounded-md text-orange-300 hover:text-orange-500 border-orange-300 hover:border-orange-500 bg-gray-600 hover:bg-gray-800 hover:cursor-pointer">Login</button>
+            <button type="submit" class="p-4 rounded-md bg-[var(--primary)] text-[var(--text-dark)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Login</button>
         </form>
-        Don't have account? <a href="{% url 'register_view' %}" class="font-bold text-orange-300 hover:text-orange-500">Register now!</a>
+        Don't have account? <a href="{% url 'register_view' %}" class="font-bold text-[var(--accent)]">Register now!</a>
     </div>
 {% endblock content %}
