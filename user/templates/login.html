@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="px-[10vw]">
+    <div class="px-[10vw] sm:px-[20vw] md:px-[30vw]">
         <h1 class="font-bold text-3xl mb-5 text-center">Login</h1>
         <form action="#"
             hx-post="{% url 'login_view' %}"
@@ -13,14 +13,14 @@
             class="flex flex-col space-y-5 mb-2">
             <span class="flex flex-col space-y-3">
                 <label for="email">Email</label>
-                <input required type="email" name="email" id="email" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">    
+                <input required type="email" name="email" id="email" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-darker] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-60">    
             </span>
             <span class="flex flex-col space-y-3">
                 <label for="password">Password</label>
-                <input required type="password" name="password" id="password" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">
+                <input required type="password" name="password" id="password" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-darker] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-60">
             </span>
-            <button type="submit" class="p-4 rounded-md bg-[var(--primary)] text-[var(--text-dark)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Login</button>
+            <button type="submit" class="p-4 rounded-md bg-[--primary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Login</button>
         </form>
-        Don't have account? <a href="{% url 'register_view' %}" class="font-bold text-[var(--accent)]">Register now!</a>
+        Don't have account? <a href="{% url 'register_view' %}" class="font-bold text-[--accent]">Register now!</a>
     </div>
 {% endblock content %}

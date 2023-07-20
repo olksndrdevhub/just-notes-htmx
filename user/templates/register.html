@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-<div class="px-[10vw]">
+<div class="px-[10vw] sm:px-[20vw] md:px-[30vw]">
     <h1 class="font-bold text-3xl mb-5 text-center">Registration</h1>
     <form
         action="#"
@@ -15,26 +15,26 @@
         >
         <span class="flex flex-col space-y-3">
             <label for="first_name">First name</label>
-            <input required type="text" name="first_name" id="first_name" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">    
+            <input required type="text" name="first_name" id="first_name" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-darker] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">    
         </span>
         <span class="flex flex-col space-y-3">
             <label for="last_name">Last name</label>
-            <input required type="text" name="last_name" id="last_name" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">    
+            <input required type="text" name="last_name" id="last_name" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-darker] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">    
         </span>
         <span class="flex flex-col space-y-3">
             <label for="email">Email</label>
-            <input required type="email" name="email" id="email" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">    
+            <input required type="email" name="email" id="email" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-darker] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">    
         </span>
         <span class="flex flex-col space-y-3">
             <label for="password">Password</label>
-            <input required type="password" name="password" id="password" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">
+            <input required type="password" name="password" id="password" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-darker] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">
         </span>
         <span class="flex flex-col space-y-3">
             <label for="password">Password again</label>
-            <input required type="password" name="password2" id="password2" class="p-2 border-2 rounded-md border-gray-300 hover:border-white bg-gray-600 hover:bg-gray-800 hover:cursor-text">
+            <input required type="password" name="password2" id="password2" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-darker] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">
         </span>
-        <button type="submit" class="p-4 rounded-md bg-[var(--primary)] text-[var(--text-dark)] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Register</button>
+        <button type="submit" class="p-4 rounded-md bg-[--primary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Register</button>
     </form>
-    Already have account? <a href="{% url 'login_view' %}" class="font-bold text-orange-300 hover:text-orange-500">Login now!</a>
+    Already have account? <a href="{% url 'login_view' %}" class="font-bold text-[--accent]">Login now!</a>
 </div>
 {% endblock content %}
