@@ -17,11 +17,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
     <style>
+        /*
         :root {
             --text: #080703;
             --text-light: #f0f0f0;
             --background: #fafafa;
-            --background-darker: #ececec;
+            --background-secondary: #ececec;
             --primary: #85b03b;
             --secondary: #bac0e8;
             --secondary-dark: #959aba;
@@ -36,6 +37,35 @@
             --dark-secondary-light: #212a11;
             --dark-accent: #8c53c6;
         }
+        */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --text: #080703;
+                --text-light: #f0f0f0;
+                --background: #fafafa;
+                --background-secondary: #ececec;
+                --primary: #85b03b;
+                --secondary: #bac0e8;
+                --secondary-dark: #959aba;
+                --accent: #5d36a1;
+            }
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text: #fcf7f7;
+                --text-secondary: #dfdfdf;
+                --text-minor: #bdbdbd;
+                --text-light: #f0f0f0;
+                --text-dark: #080703;
+                --background: #050505;
+                --background-secondary: #111111;
+                --primary: #85b03b;
+                --secondary: #171d0c;
+                --secondary-dark: #212a11;
+                --accent: #8c53c6;
+            }
+        }
         body {
             font-family: 'Exo 2', sans-serif;
         }
@@ -44,7 +74,7 @@
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-[--background] text-[--text]" x-data="{}">
     <header class="">
-        <nav class="flex justify-between h-20 p-3 sm:mx-[10vw] my-3 rounded-lg bg-[--background-darker]">
+        <nav class="flex justify-between h-20 p-3 sm:mx-[10vw] my-3 rounded-lg bg-[--background-secondary]">
             <span class="logo flex items-center">
                 <a href="{% url 'home_view' %}" class="hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                     <h1 class="font-bold text-[min(10vw,30px)]">Just Notes</h1>
@@ -52,6 +82,19 @@
             </span>
             <span class="account flex items-center font-medium">
                 <!-- <span class="self-center"> -->
+                    <a class="sm:mr-3 p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
+                        href="#">
+                        <span class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                            </svg>
+                            /
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                            </svg> 
+                        </span>
+                                                 
+                    </a>
                     {% if user.is_authenticated %}
                         {% if user.is_superuser %}
                             <a class="mr-3 p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"

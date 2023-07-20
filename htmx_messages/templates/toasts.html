@@ -1,6 +1,6 @@
 <div data-toast-container id="toasts-container" class="fixed z-50 top-[10vh] right-[5vw] w-[80vw] md:w-[30vw]">
   <div data-toast-template id="toast-" class="toast z-50 items-center w-full p-4 mb-4 hidden
-      bg-[--background-darker] rounded-lg shadow border-2" 
+      bg-[--background-secondary] rounded-lg shadow border-2" 
       role="alert">
       <div data-icon-container class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
           <span class="sr-only">Check icon</span>
@@ -17,7 +17,7 @@
     </div>
   {% for message in messages %}
     <div data-toast-template id="toast-{{message.tags}}" class="toast z-50 flex items-center w-full p-4 mb-4
-      bg-[--background-darker] rounded-lg shadow border-green-500 border-2
+      bg-[--background-secondary] rounded-lg shadow border-green-500 border-2
       {% if 'warning' in message.tags %}border-yellow-500{% endif %}
       {% if 'danger' in message.tags %}border-red-500{% endif %}"
       role="alert">
