@@ -1,2 +1,6 @@
 Django==4.2
 django-htmx==1.15.0
+gunicorn==21.2.0
+whitenoise==6.5.0
+psycopg2==2.9.6
+django-environ==0.10.0

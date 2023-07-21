@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for just-notes on 2023-07-21T17:58:15+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "just-notes"
+primary_region = "waw"
+console_command = "/code/manage.py shell"
+
+[deploy]
+  release_command = "python manage.py migrate"
+
+[env]
+  PORT = "8000"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[statics]]
+  guest_path = "/code/staticfiles"
+  url_prefix = "/static/"
