@@ -2,7 +2,7 @@
 
 ## Simple Notes App
 
-## Deployed with [Fly.io](https//:fly.io) - [just-notes.fly.dev/](https://just-notes.fly.dev/)
+## Live: [just-notes.fly.dev](https://just-notes.fly.dev/) (deployed with [Fly.io](https//:fly.io))
 
 ### Created using Django, HTMX, Alpine.js, TailwindCSS
 
