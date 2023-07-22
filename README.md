@@ -25,6 +25,9 @@
 - [x] Toasts Application to show Django Messages with HTMX
     - [x] Auto-dismissed Toasts
     - [x] Manual Toast dismiss
+- [x] Dark/Light mode:
+    - [x] Manual switching
+    - [x] Detecting system theme switching
 
 #### Steps to run locally:
 1. create a virtual environment
