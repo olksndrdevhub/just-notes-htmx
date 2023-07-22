@@ -32,9 +32,9 @@
     - [x] Detecting system theme switching
 
 ### Stack
-- `Django` for backend server
+- `Django` for the backend server
 - `TailwingCSS` for frontend styling
-- `HTMX` to make a frontend dunamic and interactive like a "reactive" apps
+- `HTMX` to make a frontend dynamic and interactive like a "reactive" apps
 - `Alpine.js` for state management and frontend interactivity
 - `JavaScript` for minor but important for usability(interactivity) things: theme switching, toasts, etc
 
