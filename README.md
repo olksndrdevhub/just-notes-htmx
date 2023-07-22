@@ -29,6 +29,13 @@
     - [x] Manual switching
     - [x] Detecting system theme switching
 
+### Stack
+- Django for backend server
+- TailwingCSS for frontend styling
+- HTMX to make a frontend dunamic and interactive like a "reactive" apps
+- Alpine.js for state management and frontend interactivity
+- JavaScript for minor but important for usability(interactivity) things: theme switching, toasts, etc
+
 #### Steps to run locally:
 1. create a virtual environment
 2. install requirements:  
