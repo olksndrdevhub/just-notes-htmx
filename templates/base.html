@@ -41,7 +41,10 @@
         @media (prefers-color-scheme: light) {
             :root {
                 --text: #080703;
+                --text-secondary: #201c0b;
+                --text-minor: #545454;
                 --text-light: #f0f0f0;
+                --text-dark: #080703;
                 --background: #fafafa;
                 --background-secondary: #ececec;
                 --primary: #85b03b;
@@ -65,6 +68,32 @@
                 --secondary-dark: #212a11;
                 --accent: #8c53c6;
             }
+        }
+        .theme-light {
+            --text: #080703;
+            --text-secondary: #201c0b;
+            --text-minor: #545454;
+            --text-light: #f0f0f0;
+            --text-dark: #080703;
+            --background: #fafafa;
+            --background-secondary: #ececec;
+            --primary: #85b03b;
+            --secondary: #bac0e8;
+            --secondary-dark: #959aba;
+            --accent: #5d36a1;
+        }
+        .theme-dark {
+            --text: #fcf7f7;
+            --text-secondary: #dfdfdf;
+            --text-minor: #bdbdbd;
+            --text-light: #f0f0f0;
+            --text-dark: #080703;
+            --background: #050505;
+            --background-secondary: #111111;
+            --primary: #85b03b;
+            --secondary: #171d0c;
+            --secondary-dark: #212a11;
+            --accent: #8c53c6;
         }
         body {
             font-family: 'Exo 2', sans-serif;
@@ -173,17 +202,11 @@
                                 </a>
                             </li>
                         {% endif %}
-                        <li class="p-2 md:p-4 rounded-md text-gray-700 bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                        <li x-on:click="toggleTheme()" x-transition class="p-2 md:p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                             <a class=""
-                                href="#">
-                                <span class="flex max-md:justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                    </svg>
-                                    (WIP)
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-                                    </svg>
+                                >
+                                <span class="flex max-md:justify-center" id="theme-switcher-span">
+                                    
                                 </span>                          
                             </a>
                         </li>
@@ -216,15 +239,43 @@
               }, 5000)
             })
           });
-    </script>
-    <!-- <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('globalState', () => ({
-                    showMobileMenu: true,
-                })
-            )
+ 
+        // THEME SWITCHING
+        const lightThemeSvg = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>'
+        const darkThemeSwg = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>'
+        // function to set a given theme/color-scheme
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+            if (themeName === 'theme-dark') {
+                document.getElementById('theme-switcher-span').innerHTML = lightThemeSvg;
+            } else {
+                document.getElementById('theme-switcher-span').innerHTML = darkThemeSwg;
+            }
+        }
+        // function to toggle between light and dark theme
+        function toggleTheme() {
+            if (localStorage.getItem('theme') === 'theme-dark'){
+                setTheme('theme-light');
+            } else {
+                setTheme('theme-dark');
+            }
+        }
+        // Immediately invoked function to set the theme on initial load
+        (function () {
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-dark');
+            } else {
+                setTheme('theme-light');
+            }
+        })();
+        // watch for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            event.matches ? setTheme('theme-dark') : setTheme('theme-light');
         });
-    </script> -->
+        // END THEME SWITCHING
+    </script>
+
     {% block additional_javascript %}{% endblock additional_javascript %}
 </body>
 </html>
