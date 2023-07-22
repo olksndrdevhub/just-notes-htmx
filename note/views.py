@@ -1,3 +1,4 @@
+from time import sleep
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
@@ -17,9 +18,17 @@ def home(request):
         )
         return redirect('login_view')
     context = {}
-    # return all notes for user
-    context['notes'] = Note.objects.filter(
+    # get all notes for user
+    notes = Note.objects.filter(
         author=request.user).order_by('-updated_at')
+    # if search param in url
+    if request.GET.get('search', False):
+        query = request.GET.get('search', False)
+        if query:
+            sleep(0.5)
+            notes = notes.filter(title__icontains=query)
+    # return all notes for user
+    context['notes'] = notes
     template_name = 'note/home.html'
     return render(request, template_name, context)
 
