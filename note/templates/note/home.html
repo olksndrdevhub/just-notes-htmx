@@ -19,9 +19,36 @@
 {% block content %}
 <div class="px-[2vw]"
     x-data="note">
-    <span class="flex mb-5 justify-between items-center">
-        <h2 class="font-bold text-2xl">Your Notes</h2>
-        <span class="bg-[--background-secondary] p-3 rounded-lg">
+    <span class="flex flex-wrap mb-5 col justify-between items-center">
+        <h2 class="font-bold text-2xl md:order-1">Your Notes</h2>
+        <span class="flex order-3 w-full md:w-[50vw] md:order-2">
+            <!-- <button
+                x-on:click=""
+                class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-md bg-[--secondary] hover:cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>                   
+            </button> -->
+            <input type="search" name="search" id="search" placeholder="Type to search..." x-model="searchQuery"
+                class="w-full flex justify-center mt-2 md:mt-0 p-4 rounded-md rounded-r-none bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none"
+                hx-get="{% url 'home_view' %}"
+                hx-trigger="keyup changed delay:500ms"
+                hx-target="#notes-container"
+                hx-select="#notes-container"
+                hx-include="[name='search']"
+                hx-select-oob="#notes-total"
+                hx-swap="outerHTML"
+                hx-indicator="#indicator"
+                hx-push-url="true"
+                >
+            <!-- <img id="indicator" class="w-auto flex justify-center p-4 rounded-md rounded-l-none bg-[--secondary]" src="/spinner.gif"/> -->
+            <span class="w-auto flex justify-center mt-2 md:mt-0 p-4 rounded-md rounded-l-none bg-[--background-secondary]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 htmx-indicator animate-spin stroke-[--accent]" id="indicator">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+            </span>
+        </span>
+        <span class="bg-[--background-secondary] p-3 rounded-lg md:order-3">
             <p id="notes-total" class="text-2xl text-[--text-minor]">Total: <strong class="text-[--text-secondary] font-semibold">{{ notes.count }}</strong></p>
         </span>
     </span>
@@ -81,7 +108,6 @@
     <div id="notes-container" class="notes-block grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[1vw]">
         <a class="flex justify-center flex-col p-6 rounded-md bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                 type="button"
-                href="#"
                 x-on:click="addNote"
                 >
                 <h5 class="flex mb-2 text-2xl font-bold tracking-tight text-[--text-dark] justify-center items-center">
@@ -95,7 +121,6 @@
         {% for note in notes %}
             <a class="flex flex-col p-4 group rounded-md bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                 type="button"
-                href="#"
                 id="note{{note.id}}"
                 data-note-id="{{note.id}}"
                 x-on:click="setNote"
@@ -276,6 +301,8 @@
             selectedTotal: 0,
             allSelected: false,
             selectedNotesIds: new Array(),
+            
+            searchQuery: new URLSearchParams(window.location.search).get('search'),
 
             setNote(event) {
                 let closestLinkElem = event.target.closest('a');
