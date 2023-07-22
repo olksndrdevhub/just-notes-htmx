@@ -22,9 +22,21 @@
         - [x] Select All Notes option
         - [x] Bulk Delete selected Notes
         - [x] Bulk Change 'Completed' Status on selected Notes
+    - [ ] Pagination
+    - [ ] Search
 - [x] Toasts Application to show Django Messages with HTMX
     - [x] Auto-dismissed Toasts
     - [x] Manual Toast dismiss
+- [x] Dark/Light mode:
+    - [x] Manual switching
+    - [x] Detecting system theme switching
+
+### Stack
+- `Django` for the backend server
+- `TailwingCSS` for frontend styling
+- `HTMX` to make a frontend dynamic and interactive like a "reactive" apps
+- `Alpine.js` for state management and frontend interactivity
+- `JavaScript` for minor but important for usability(interactivity) things: theme switching, toasts, etc
 
 #### Steps to run locally:
 1. create a virtual environment
