@@ -82,13 +82,12 @@
 
     </style>
 </head>
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-[--background] text-[--text]"\
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-[--background] text-[--text]"
     x-data="{showMenu: false}"
     x-init="showMenu=window.innerWidth > 768"
     x-on:resize.window="window.innerWidth > 768 ? showMenu = true : showMenu = false"
     >
     <header class="">
-
         <nav class="flex justify-between p-3 rounded-lg bg-[--background-secondary] z-20 my-4 top-4 mx-[5vw]">
             <div class="flex flex-wrap justify-between w-full">
                 <a href="{% url 'home_view' %}" class="hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer text-[--accent] self-center">
@@ -196,12 +195,24 @@
             </div>
         </nav>
     </header>
-    <main class="lg:px-[5vw] px-2 mt-5">
+    <main class="lg:px-[5vw] px-2 mt-5 min-h-[80vh]">
         {% block content %}
         {% endblock content %}
     </main>
-    <footer>
-        
+    <footer class="px-[3vw] text-sm text-[--text-minor] w-full pt-10 pb-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
+            <span class="grid justify-center grid-flow-col gap-1">
+                Design/Development: 
+                <a target="_blank" class="text-[--accent]" href="https://oleksandrdev.com">oleksandrdev.com</a>
+            </span>
+            <span class="grid grid-flow-col justify-center gap-1">
+                Github Repo: 
+                <a target="_blank" class="text-[--accent]" href="https://github.com/olksndrdevhub/just-notes-htmx">just-notes-htmx</a>
+            </span>
+            <span class="grid justify-center">
+                Copyright © 2023
+            </span>
+        </div>
     </footer>
     {% include "toasts.html" %}
     <script src="{% static 'htmx.min.js' %}"></script>
