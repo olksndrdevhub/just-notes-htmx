@@ -16,7 +16,7 @@
       </button>
     </div>
   {% for message in messages %}
-    <div data-toast-template id="toast-{{message.tags}}" class="toast z-50 flex items-center w-full p-4 mb-4
+    <div id="toast-{{message.tags}}" class="toast z-50 flex items-center w-full p-4 mb-4
       bg-[--background-secondary] rounded-lg shadow border-green-500 border-2
       {% if 'warning' in message.tags %}border-yellow-500{% endif %}
       {% if 'danger' in message.tags %}border-red-500{% endif %}"
