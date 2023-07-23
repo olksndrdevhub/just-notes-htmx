@@ -330,8 +330,9 @@
                         hx-trigger="click delay:500ms"
                         hx-target="#notes-container"
                         hx-select="#notes-container"
-                        hx-select-oob="#notes-total"
+                        hx-select-oob="#notes-total,#pagination"
                         hx-swap="outerHTML"
+                        hx-push-url="true"
                         x-on:click="confirmModalShow = false"
                         class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                         Yes, I'm sure

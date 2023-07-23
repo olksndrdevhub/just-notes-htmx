@@ -145,7 +145,8 @@ def delete_note_view(request, note_id):
     ).order_by('-updated_at')
     # get pagination
     context['notes'], context['page_range'] = get_paginated_query(notes, request)
-    return render(request, template_name, context)
+    response = render(request, template_name, context)
+    return push_url(response, reverse('home_view'))
 
 
 def bulk_notes_view(request):
