@@ -6,6 +6,27 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from note.models import Note
 
 
+def get_paginated_query(query, request):
+    '''
+    helper function to generate paginated query
+    '''
+    paginator = Paginator(query, 9)
+    page = request.GET.get('page', 1)
+    try:
+        sleep(0.1)
+        query = paginator.page(page)
+    except PageNotAnInteger:
+        query = paginator.page(1)
+    except EmptyPage:
+        query = paginator.page(paginator.num_pages)
+    # add context
+    # config pagination
+    page_range = paginator.get_elided_page_range(number=page,
+                                                 on_each_side=3,
+                                                 on_ends=1)
+    return query, page_range
+
+
 # Create your views here.
 def home(request):
     '''
@@ -29,22 +50,9 @@ def home(request):
         notes = notes.filter(title__icontains=query)
     # return all notes for user
 
-    # setup pagination
-    paginator = Paginator(notes, 9)
-    page = request.GET.get('page', 1)
-    try:
-        sleep(0.1)
-        notes = paginator.page(page)
-    except PageNotAnInteger:
-        notes = paginator.page(1)
-    except EmptyPage:
-        notes = paginator.page(paginator.num_pages)
-    # add context
-    # config pagination
-    context['page_range'] = paginator.get_elided_page_range(number=page,
-                                                            on_each_side=3,
-                                                            on_ends=1)
-    context['notes'] = notes
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
+
     context['search'] = query
     # template
     template_name = 'note/home.html'
@@ -101,9 +109,12 @@ def note_view(request):
                 messages.add_message(request, messages.SUCCESS,
                                      'New Note added!')
     # return all notes for user
-    context['notes'] = Note.objects.filter(
+    notes = Note.objects.filter(
         author=request.user
     ).order_by('-updated_at')
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
+
     return render(request, template_name, context)
 
 
@@ -124,9 +135,11 @@ def delete_note_view(request, note_id):
             messages.add_message(request, messages.ERROR,
                                  'Something went wrong...')
     # return all notes for user
-    context['notes'] = Note.objects.filter(
+    notes = Note.objects.filter(
         author=request.user
     ).order_by('-updated_at')
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
     return render(request, template_name, context)
 
 
@@ -169,7 +182,9 @@ def bulk_notes_view(request):
             messages.add_message(request, messages.SUCCESS,
                                  'Notes updated!')
     # return all notes for user
-    context['notes'] = Note.objects.filter(
+    notes = Note.objects.filter(
         author=request.user
     ).order_by('-updated_at')
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
     return render(request, template_name, context)
