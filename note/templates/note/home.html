@@ -62,7 +62,8 @@
             <button 
                 hx-post="{% url 'bulk_notes_view' %}"
                 hx-target="#notes-container"
-                hx-select="#notes-container,#pagination"
+                hx-select="#notes-container"
+                hx-select-oob="#pagination"
                 hx-include="[name='selected-notes-ids']"
                 hx-swap="outerHTML"
                 hx-push-url="true"

@@ -1,8 +1,10 @@
 from time import sleep
+from django_htmx.http import push_url
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
+from django.urls import reverse
 
 from note.models import Note
 
@@ -11,7 +13,7 @@ def get_paginated_query(query, request):
     '''
     helper function to generate paginated query
     '''
-    paginator = Paginator(query, 10)
+    paginator = Paginator(query, 19)
     page = request.GET.get('page', 1)
     try:
         sleep(0.1)
@@ -117,7 +119,8 @@ def note_view(request):
     # get pagination
     context['notes'], context['page_range'] = get_paginated_query(notes, request)
 
-    return render(request, template_name, context)
+    response = render(request, template_name, context)
+    return push_url(response, reverse('home_view'))
 
 
 def delete_note_view(request, note_id):
@@ -189,4 +192,5 @@ def bulk_notes_view(request):
     ).order_by('-updated_at')
     # get pagination
     context['notes'], context['page_range'] = get_paginated_query(notes, request)
-    return render(request, template_name, context)
+    response = render(request, template_name, context)
+    return push_url(response, reverse('home_view'))
