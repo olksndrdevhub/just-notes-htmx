@@ -10,18 +10,19 @@ def get_paginated_query(query, request):
     '''
     helper function to generate paginated query
     '''
-    paginator = Paginator(query, 9)
+    paginator = Paginator(query, 10)
     page = request.GET.get('page', 1)
     try:
         sleep(0.1)
         query = paginator.page(page)
+    except EmptyPage:
+        messages.add_message(request, messages.ERROR, 'Bad page number...')
+        query = paginator.page(paginator.num_pages)
     except PageNotAnInteger:
         query = paginator.page(1)
-    except EmptyPage:
-        query = paginator.page(paginator.num_pages)
     # add context
     # config pagination
-    page_range = paginator.get_elided_page_range(number=page,
+    page_range = paginator.get_elided_page_range(number=query.number,
                                                  on_each_side=3,
                                                  on_ends=1)
     return query, page_range
