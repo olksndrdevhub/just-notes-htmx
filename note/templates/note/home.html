@@ -5,15 +5,6 @@
 {% endblock title %}
 
 {% block additional_css %}
-    <style>
-        .invalid-feedback {
-            display: none;
-        }
-        .invalid-feedback.show {
-            color: red;
-            display: block;
-        }
-    </style>
 {% endblock additional_css %}
 
 {% block content %}
@@ -29,7 +20,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>                   
             </button> -->
-            <input type="search" name="search" id="search" placeholder="Type to search..." x-model="searchQuery"
+            <input type="text" name="search" id="search" placeholder="Type to search..." x-model="searchQuery"
                 class="w-full flex justify-center mt-2 md:mt-0 p-4 rounded-md rounded-r-none bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none"
                 hx-get="{% url 'home_view' %}"
                 hx-trigger="keyup changed delay:500ms"
@@ -52,7 +43,7 @@
             <p id="notes-total" class="text-2xl text-[--text-minor]">Total: <strong class="text-[--text-secondary] font-semibold">{{ notes.count }}</strong></p>
         </span>
     </span>
-    <div x-show="multipleSelectActive" class="bg-[--background-secondary] flex mb-5 p-3 rounded-lg justify-between sm:items-center">
+    <div x-cloak x-show="multipleSelectActive" class="bg-[--background-secondary] flex mb-5 p-3 rounded-lg justify-between sm:items-center">
         <input type="hidden" name="selected-notes-ids" x-model="selectedNotesIds">
         <input type="hidden" name="bulk-notes-action" value="bulk_delete">
         <div class="flex flex-col sm:flex-row justify-between sm:items-center">
@@ -154,7 +145,7 @@
     </div>
     <!-- modals -->
     <!-- note modal -->
-    <div x-show="noteModalShow" x-transition id="note-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
+    <div x-cloak x-show="noteModalShow" x-transition id="note-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
         <div class="relative w-full max-w-2xl max-h-full">
             <!-- Modal content -->
             <div id="note-body" x-on:click.outside="noteModalShow = false" class="relative bg-[--background-secondary] z-50 rounded-lg shadow">
@@ -232,7 +223,7 @@
     </div>
     <!-- end of note modal -->
     <!-- confirm modal -->
-    <div x-show="confirmModalShow" x-transition id="popup-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
+    <div x-cloak x-show="confirmModalShow" x-transition id="popup-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
         <div class="relative w-full max-w-md max-h-full">
             <div class="relative bg-[--background-secondary] rounded-lg shadow">
                 <button type="button"
