@@ -1,6 +1,7 @@
 from time import sleep
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from note.models import Note
 
@@ -25,10 +26,27 @@ def home(request):
     if request.GET.get('search', False):
         query = request.GET.get('search', False)
         if query:
-            sleep(0.5)
+            sleep(0.1)
             notes = notes.filter(title__icontains=query)
     # return all notes for user
+
+    # setup pagination
+    paginator = Paginator(notes, 9)
+    page = request.GET.get('page', 1)
+    try:
+        sleep(0.1)
+        notes = paginator.page(page)
+    except PageNotAnInteger:
+        notes = paginator.page(1)
+    except EmptyPage:
+        notes = paginator.page(paginator.num_pages)
+    # add context
+    # config pagination
+    context['page_range'] = paginator.get_elided_page_range(number=page,
+                                                            on_each_side=3,
+                                                            on_ends=1)
     context['notes'] = notes
+    # add template
     template_name = 'note/home.html'
     return render(request, template_name, context)
 
@@ -155,4 +173,3 @@ def bulk_notes_view(request):
         author=request.user
     ).order_by('-updated_at')
     return render(request, template_name, context)
-

@@ -38,7 +38,7 @@
                 <div class="flex md:hidden md:order-2">
                     <button type="button" 
                         x-on:click="showMenu = !showMenu"
-                        class="inline-flex items-center p-4 justify-center text-sm md:hidden focus:outline-none rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:cursor-pointer hover:text-[--accent]" aria-controls="navbar-sticky" aria-expanded="false">
+                        class="inline-flex items-center p-4 justify-center text-sm md:hidden focus:outline-none rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:cursor-pointer hover:text-[--accent]" aria-controls="navbar-sticky" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
                         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
@@ -49,7 +49,7 @@
                     <ul class="flex flex-col mt-4 font-medium rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-4 md:mt-0">
                         {% if user.is_authenticated %}
                             {% if user.is_superuser %}
-                            <a href="/admin" class="p-2 md:p-4 text-center rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            <a href="/admin" class="p-2 md:p-4 text-center rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                                 <li class="">
                                     <span class="flex max-md:justify-center">
                                         Admin Panel
@@ -60,7 +60,7 @@
                                 </li>
                             </a>
                             {% endif %}
-                            <a href="{% url 'home_view' %}" class="p-2 md:p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            <a href="{% url 'home_view' %}" class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                                 <li class="">
                                     <span class="flex max-md:justify-center">
                                         Home
@@ -70,7 +70,7 @@
                                     </span>
                                 </li>
                             </a>
-                            <a href="{% url 'profile_view' %}" class="p-2 md:p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            <a href="{% url 'profile_view' %}" class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                                 <li class="">
                                     <span class="flex max-md:justify-center">
                                         <p class="md:hidden lg:block">
@@ -82,7 +82,7 @@
                                     </span>
                                 </li>
                             </a>
-                            <a href="{% url 'logout_view' %}" class="p-2 md:p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            <a href="{% url 'logout_view' %}" class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                                 <li class="">
                                     <span class="flex max-md:justify-center">
                                         <p class="md:hidden lg:block">
@@ -95,7 +95,7 @@
                                 </li>
                             </a>
                         {% else %}
-                            <a href="{% url 'login_view' %}" class="p-2 md:p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            <a href="{% url 'login_view' %}" class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                                 <li class="">
                                     <span class="flex max-md:justify-center">
                                         Log In
@@ -105,7 +105,7 @@
                                     </span>
                                 </li>
                             </a>
-                            <a href="{% url 'register_view' %}" class="p-2 md:p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            <a href="{% url 'register_view' %}" class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                                 <li class="">
                                     <span class="flex max-md:justify-center">
                                         Register
@@ -116,7 +116,7 @@
                                 </li>
                             </a>
                         {% endif %}
-                        <li x-on:click="toggleTheme()" x-transition class="p-2 md:p-4 rounded-md bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                        <li x-on:click="toggleTheme()" x-transition class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                             <a class=""
                                 >
                                 <span class="flex max-md:justify-center" id="theme-switcher-span">
