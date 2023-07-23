@@ -9,78 +9,15 @@
         {% block title %}{% endblock title %}Just Notes
     </title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="{% static 'alpine.min.js' %}" defer></script>
-    {% block additional_head_links %}{% endblock additional_head_links %}
-    {% block additional_css %}{% endblock additional_css %}
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="{% static 'js/alpine.min.js' %}" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
-    <style>
-        /*
-        @media (prefers-color-scheme: light) {
-            :root {
-                --text: #080703;
-                --text-secondary: #201c0b;
-                --text-minor: #545454;
-                --text-light: #f0f0f0;
-                --text-dark: #080703;
-                --background: #fafafa;
-                --background-secondary: #ececec;
-                --primary: #85b03b;
-                --secondary: #bac0e8;
-                --secondary-dark: #959aba;
-                --accent: #5d36a1;
-            }
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --text: #fcf7f7;
-                --text-secondary: #dfdfdf;
-                --text-minor: #bdbdbd;
-                --text-light: #f0f0f0;
-                --text-dark: #080703;
-                --background: #050505;
-                --background-secondary: #111111;
-                --primary: #85b03b;
-                --secondary: #171d0c;
-                --secondary-dark: #212a11;
-                --accent: #8c53c6;
-            }
-        }
-        */
-        .theme-light {
-            --text: #080703;
-            --text-secondary: #201c0b;
-            --text-minor: #545454;
-            --text-light: #f0f0f0;
-            --text-dark: #080703;
-            --background: #fafafa;
-            --background-secondary: #ececec;
-            --primary: #85b03b;
-            --secondary: #bac0e8;
-            --secondary-dark: #959aba;
-            --accent: #5d36a1;
-        }
-        .theme-dark {
-            --text: #fcf7f7;
-            --text-secondary: #dfdfdf;
-            --text-minor: #bdbdbd;
-            --text-light: #f0f0f0;
-            --text-dark: #080703;
-            --background: #050505;
-            --background-secondary: #111111;
-            --primary: #85b03b;
-            --secondary: #171d0c;
-            --secondary-dark: #212a11;
-            --accent: #8c53c6;
-        }
-        body {
-            font-family: 'Exo 2', sans-serif;
-        }
-
-    </style>
+    <link rel="stylesheet" href="{% static 'css/tailwind/main.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom/custom.css' %}">
+    {% block additional_head_links %}{% endblock additional_head_links %}
+    {% block additional_css %}{% endblock additional_css %}
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-[--background] text-[--text]"
     x-data="{showMenu: false}"
@@ -103,7 +40,7 @@
                         </svg>
                     </button>
                 </div>
-                <div x-show="showMenu" x-transition class="justify-between w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <div x-cloak x-show="showMenu" x-transition class="justify-between w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                     <ul class="flex flex-col mt-4 font-medium rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-4 md:mt-0">
                         {% if user.is_authenticated %}
                             {% if user.is_superuser %}
@@ -207,7 +144,7 @@
         </div>
     </footer>
     {% include "toasts.html" %}
-    <script src="{% static 'htmx.min.js' %}"></script>
+    <script src="{% static 'js/htmx.min.js' %}"></script>
     <script>
         htmx.config.useTemplateFragments = true;
     </script>

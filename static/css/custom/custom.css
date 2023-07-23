@@ -1,0 +1,39 @@
+[x-cloak] { display: none !important; }
+
+.invalid-feedback {
+    display: none;
+}
+.invalid-feedback.show {
+    color: red;
+    display: block;
+}
+
+.theme-light {
+    --text: #080703;
+    --text-secondary: #201c0b;
+    --text-minor: #545454;
+    --text-light: #f0f0f0;
+    --text-dark: #080703;
+    --background: #fafafa;
+    --background-secondary: #ececec;
+    --primary: #85b03b;
+    --secondary: #bac0e8;
+    --secondary-dark: #959aba;
+    --accent: #5d36a1;
+}
+.theme-dark {
+    --text: #fcf7f7;
+    --text-secondary: #dfdfdf;
+    --text-minor: #bdbdbd;
+    --text-light: #f0f0f0;
+    --text-dark: #080703;
+    --background: #050505;
+    --background-secondary: #111111;
+    --primary: #85b03b;
+    --secondary: #171d0c;
+    --secondary-dark: #212a11;
+    --accent: #8c53c6;
+}
+body {
+    font-family: 'Exo 2', sans-serif;
+}
