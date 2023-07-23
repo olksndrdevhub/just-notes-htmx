@@ -1,8 +1,34 @@
 from time import sleep
+from django_htmx.http import push_url
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
+from django.urls import reverse
 
 from note.models import Note
+
+
+def get_paginated_query(query, request):
+    '''
+    helper function to generate paginated query
+    '''
+    paginator = Paginator(query, 19)
+    page = request.GET.get('page', 1)
+    try:
+        sleep(0.1)
+        query = paginator.page(page)
+    except EmptyPage:
+        messages.add_message(request, messages.ERROR, 'Bad page number...')
+        query = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        query = paginator.page(1)
+    # add context
+    # config pagination
+    page_range = paginator.get_elided_page_range(number=query.number,
+                                                 on_each_side=3,
+                                                 on_ends=1)
+    return query, page_range
 
 
 # Create your views here.
@@ -22,13 +48,17 @@ def home(request):
     notes = Note.objects.filter(
         author=request.user).order_by('-updated_at')
     # if search param in url
-    if request.GET.get('search', False):
-        query = request.GET.get('search', False)
-        if query:
-            sleep(0.5)
-            notes = notes.filter(title__icontains=query)
+    query = request.GET.get('search', False)
+    if query:
+        sleep(0.1)
+        notes = notes.filter(title__icontains=query)
     # return all notes for user
-    context['notes'] = notes
+
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
+
+    context['search'] = query
+    # template
     template_name = 'note/home.html'
     return render(request, template_name, context)
 
@@ -56,9 +86,9 @@ def note_view(request):
                     # set completed status
                     if (data.get('completed', None) is not None
                             and data.get('completed')) == 'on':
-                        note.completed = True
+                        note.completed_at = timezone.now()
                     else:
-                        note.completed = False
+                        note.completed = None
                     note.save()
                     messages.add_message(request, messages.SUCCESS,
                                          'Your Note updated!')
@@ -78,15 +108,19 @@ def note_view(request):
                 # set completed status
                 if (data.get('completed', None) is not None
                         and data.get('completed')) == 'on':
-                    new_note.completed = True
+                    new_note.completed_at = timezone.now()
                 new_note.save()
                 messages.add_message(request, messages.SUCCESS,
                                      'New Note added!')
     # return all notes for user
-    context['notes'] = Note.objects.filter(
+    notes = Note.objects.filter(
         author=request.user
     ).order_by('-updated_at')
-    return render(request, template_name, context)
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
+
+    response = render(request, template_name, context)
+    return push_url(response, reverse('home_view'))
 
 
 def delete_note_view(request, note_id):
@@ -106,10 +140,13 @@ def delete_note_view(request, note_id):
             messages.add_message(request, messages.ERROR,
                                  'Something went wrong...')
     # return all notes for user
-    context['notes'] = Note.objects.filter(
+    notes = Note.objects.filter(
         author=request.user
     ).order_by('-updated_at')
-    return render(request, template_name, context)
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
+    response = render(request, template_name, context)
+    return push_url(response, reverse('home_view'))
 
 
 def bulk_notes_view(request):
@@ -140,10 +177,10 @@ def bulk_notes_view(request):
             for note_id in selected_notes_ids:
                 try:
                     note = Note.objects.get(id=note_id)
-                    if note.completed:
-                        note.completed = False
+                    if note.is_completed:
+                        note.completed_at = None
                     else:
-                        note.completed = True
+                        note.completed_at = timezone.now()
                     note.save()
                 except (Note.DoesNotExist, Note.MultipleObjectsReturned):
                     messages.add_message(request, messages.ERROR,
@@ -151,8 +188,10 @@ def bulk_notes_view(request):
             messages.add_message(request, messages.SUCCESS,
                                  'Notes updated!')
     # return all notes for user
-    context['notes'] = Note.objects.filter(
+    notes = Note.objects.filter(
         author=request.user
     ).order_by('-updated_at')
-    return render(request, template_name, context)
-
+    # get pagination
+    context['notes'], context['page_range'] = get_paginated_query(notes, request)
+    response = render(request, template_name, context)
+    return push_url(response, reverse('home_view'))

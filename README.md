@@ -22,8 +22,9 @@
         - [x] Select All Notes option
         - [x] Bulk Delete selected Notes
         - [x] Bulk Change 'Completed' Status on selected Notes
-    - [ ] Pagination
+    - [x] Pagination
     - [x] Live Search
+    - [ ] Filter by `is_completed` status
 - [x] Toasts Application to show Django Messages with HTMX
     - [x] Auto-dismissed Toasts
     - [x] Manual Toast dismiss

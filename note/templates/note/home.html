@@ -15,32 +15,32 @@
         <span class="flex order-3 w-full md:w-[50vw] md:order-2">
             <!-- <button
                 x-on:click=""
-                class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-md bg-[--secondary] hover:cursor-pointer">
+                class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-[--secondary] hover:cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>                   
             </button> -->
-            <input type="text" name="search" id="search" placeholder="Type to search..." x-model="searchQuery"
-                class="w-full flex justify-center mt-2 md:mt-0 p-4 rounded-md rounded-r-none bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none"
+            <input type="text" name="search" id="search" placeholder="Type to search..." {% if search %}value="{{ search }}"{% endif %}
+                class="w-full flex justify-center mt-2 md:mt-0 p-3 rounded-lg rounded-r-none bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none"
                 hx-get="{% url 'home_view' %}"
                 hx-trigger="keyup changed delay:500ms"
                 hx-target="#notes-container"
                 hx-select="#notes-container"
                 hx-include="[name='search']"
-                hx-select-oob="#notes-total"
+                hx-select-oob="#notes-total,#pagination"
                 hx-swap="outerHTML"
                 hx-indicator="#indicator"
                 hx-push-url="true"
                 >
-            <!-- <img id="indicator" class="w-auto flex justify-center p-4 rounded-md rounded-l-none bg-[--secondary]" src="/spinner.gif"/> -->
-            <span class="w-auto flex justify-center mt-2 md:mt-0 p-4 rounded-md rounded-l-none bg-[--background-secondary]">
+            <!-- <img id="indicator" class="w-auto flex justify-center p-4 rounded-lg rounded-l-none bg-[--secondary]" src="/spinner.gif"/> -->
+            <span class="w-auto flex justify-center mt-2 md:mt-0 p-4 rounded-lg rounded-l-none bg-[--background-secondary]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 htmx-indicator animate-spin stroke-[--accent]" id="indicator">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                 </svg>
             </span>
         </span>
         <span class="bg-[--background-secondary] p-3 rounded-lg md:order-3">
-            <p id="notes-total" class="text-2xl text-[--text-minor]">Total: <strong class="text-[--text-secondary] font-semibold">{{ notes.count }}</strong></p>
+            <p id="notes-total" class="text-2xl text-[--text-minor]">Total: <strong class="text-[--text-secondary] font-semibold">{{ notes.paginator.count }}</strong></p>
         </span>
     </span>
     <div x-cloak x-show="multipleSelectActive" class="bg-[--background-secondary] flex mb-5 p-3 rounded-lg justify-between sm:items-center">
@@ -63,10 +63,12 @@
                 hx-post="{% url 'bulk_notes_view' %}"
                 hx-target="#notes-container"
                 hx-select="#notes-container"
+                hx-select-oob="#pagination"
                 hx-include="[name='selected-notes-ids']"
                 hx-swap="outerHTML"
+                hx-push-url="true"
                 x-on:click="multipleSelectActive = false; $nextTick(() => {selectAllNotes(reset=true)})"
-                class="w-auto flex justify-center p-4 rounded-md bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                class="w-auto flex justify-center p-4 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 Change Status
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -77,10 +79,11 @@
                 hx-target="#notes-container"
                 hx-select="#notes-container"
                 hx-include="[name='selected-notes-ids'], [name='bulk-notes-action']"
-                hx-select-oob="#notes-total"
+                hx-select-oob="#notes-total,#pagination"
                 hx-swap="outerHTML"
+                hx-push-url="true"
                 x-on:click="multipleSelectActive = false; $nextTick(() => {selectAllNotes(reset=true)})"
-                class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-md bg-red-900 text-[--text-light] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-red-900 text-[--text-light] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 Delete Selected
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -88,7 +91,7 @@
             </button>
             <button
                 x-on:click="selectAllNotes(reset=true)"
-                class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-md bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>                  
@@ -96,8 +99,8 @@
         </span>
 
     </div>
-    <div id="notes-container" class="notes-block grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[1vw]">
-        <a class="flex justify-center flex-col p-6 rounded-md bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
+    <div id="notes-container" class="notes-block grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 mb-5">
+        <a class="flex justify-center flex-col p-6 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                 type="button"
                 x-on:click="addNote"
                 >
@@ -110,7 +113,7 @@
                 
             </a>
         {% for note in notes %}
-            <a class="flex flex-col p-4 group rounded-md bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
+            <a class="flex flex-col p-4 group rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                 type="button"
                 id="note{{note.id}}"
                 data-note-id="{{note.id}}"
@@ -128,8 +131,8 @@
                     <p data-note-content="{{note.content}}" class="font-normal text-[--text-secondary]">{{ note.content|truncatechars:100 }}</p>
                     <span class="flex justify-between">
                         <!-- <p data-note-created-at="" class="hidden">{{ note.created_at }}</p> -->
-                        <p data-note-completed="{{note.completed}}" data-note-created-at="{{note.created_at}}" data-note-updated-at="{{note.updated_at}}" class="font-normal text-xs text-[--text-minor]">Updated: {{ note.updated_at }}</p>
-                        {% if note.completed %}
+                        <p {% if note.completed_at %}data-note-completed="true"{% else %}data-note-completed="false"{% endif %} data-note-created-at="{{note.created_at}}" data-note-updated-at="{{note.updated_at}}" class="font-normal text-xs text-[--text-minor]">Updated: {{ note.updated_at }}</p>
+                        {% if note.completed_at %}
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-green-700">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>  
@@ -143,13 +146,106 @@
             </a>
         {% endfor %}
     </div>
+
+    <div id="pagination">
+        {% if notes.has_other_pages %}
+            <nav aria-label="Notes navigation" class="flex">
+                <ul class="flex flex-wrap justify-center space-x-2 mx-auto p-2 w-fit rounded-lg bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none">
+                    {% if notes.has_previous %}
+                        <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer hover:bg-[--secondary-dark]"
+                            {% if search %}
+                                hx-get="?search={{ search }}&page={{ notes.previous_page_number }}"
+                            {% else %}
+                                hx-get="?page={{ notes.previous_page_number }}"
+                            {% endif %}
+                            hx-target="#notes-container"
+                            hx-select="#notes-container"
+                            hx-select-oob="#pagination"
+                            hx-swap="outerHTML"
+                            hx-push-url="true"
+                            hx-indicator="#indicator"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>                              
+                        </li>
+                    {% else %}
+                        <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--background] text-[--text-minor] hover:cursor-default">
+                            <span class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                </svg>  
+                            </span>
+                        </li>
+                    {% endif %}
+                    {% for i in page_range|default_if_none:notes.paginator.get_elided_page_range %}
+                        {% if i == notes.paginator.ELLIPSIS %}
+                            <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--background-secondary] text-[--text-minor] hover:cursor-default" aria-current="page">
+                                <span class="">{{ i }}</span>
+                            </li>
+                        {% else %}
+                            {% if notes.number == i %}
+                                <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--background] text-[--text-minor] hover:cursor-default" aria-current="page">
+                                    <span class="">{{ i }}</span>
+                                </li>
+                            {% else %}
+                                <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer hover:bg-[--secondary-dark]"
+                                    {% if search %}
+                                        hx-get="?search={{ search }}&page={{ i }}"
+                                    {% else %}
+                                        hx-get="?page={{ i }}"
+                                    {% endif %}
+                                    hx-target="#notes-container"
+                                    hx-select="#notes-container"
+                                    hx-select-oob="#pagination"
+                                    hx-swap="outerHTML"
+                                    hx-push-url="true"
+                                    hx-indicator="#indicator"
+                                    >
+                                    {{ i }}
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if notes.has_next %}
+                        <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer hover:bg-[--secondary-dark]"
+                            {% if search %}
+                                hx-get="?search={{ search }}&page={{ notes.next_page_number }}"
+                            {% else %}
+                                hx-get="?page={{ notes.next_page_number }}"
+                            {% endif %}
+                            hx-target="#notes-container"
+                            hx-select="#notes-container"
+                            hx-select-oob="#pagination"
+                            hx-swap="outerHTML"
+                            hx-push-url="true"
+                            hx-indicator="#indicator"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>  
+                        </li>
+                    {% else %}
+                        <li class="w-auto flex justify-center sm:ml-3 py-2 px-4 rounded-lg bg-[--background] text-[--text-minor] hover:cursor-default">
+                            <span class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>  
+                            </span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+
     <!-- modals -->
     <!-- note modal -->
     <div x-cloak x-show="noteModalShow" x-transition id="note-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
         <div class="relative w-full max-w-2xl max-h-full">
             <!-- Modal content -->
             <div id="note-body" x-on:click.outside="noteModalShow = false" class="relative bg-[--background-secondary] z-50 rounded-lg shadow">
-                <button x-on:click="noteModalShow = false" type="button" class="absolute top-3 right-2.5 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center bg-[--secondary] hover:bg-[--secondary-dark] hover:cursor-pointer" data-modal-hide="note-modal">
+                <button x-on:click="noteModalShow = false" type="button" class="absolute top-3 right-2.5 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center bg-[--secondary] hover:bg-[--secondary-dark] hover:cursor-pointer dark:hover:text-white" data-modal-hide="note-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -199,19 +295,19 @@
                         <div class="flex justify-between space-x-2">
                             <button x-on:click="noteModalShow = false"
                                 type="button"
-                                class="w-full p-4 rounded-md bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Cancel</button>
+                                class="w-full p-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">Cancel</button>
                             <button x-show="noteAction === 'update'" x-on:click="confirmModalShow = true;noteModalShow = false"
                                 type="button" 
-                                class="w-16 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                class="w-16 flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-red-900 text-[--text-light] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
                             </button>
-                            <button name="update" type="button" class="w-full p-4 rounded-md bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
+                            <button name="update" type="button" class="w-full p-4 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
                                 hx-post="{% url 'note_view' %}"
                                 hx-target="#notes-container"
                                 hx-select="#notes-container"
-                                hx-select-oob="#notes-total"
+                                hx-select-oob="#notes-total,#pagination"
                                 hx-swap="outerHTML"
                                 x-on:click="noteModalShow = false"
                                 >Save</button>
@@ -228,34 +324,42 @@
             <div class="relative bg-[--background-secondary] rounded-lg shadow">
                 <button type="button"
                     x-on:click="confirmModalShow = false; noteModalShow = true"
-                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    class="absolute top-3 right-2.5 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center bg-[--secondary] hover:bg-[--secondary-dark] hover:cursor-pointer dark:hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
                 <div class="p-6 text-center">
-                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this Note?</h3>
+                    <div class="p-2 inline-flex items-center justify-center flex-shrink-0 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                        <svg class="w-10 h-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+                        </svg>
+                      <span class="sr-only">Check icon</span>
+                    </div>
+                    <h3 class="mb-5 text-lg font-normal">Are you sure you want to delete this Note?</h3>
                     <input type="hidden" name="note_id" x-model="id">
-                    <button id="note_delete_btn" type="button"
-                        hx-delete="/"
-                        hx-on::config-request="event.detail.path = `note/${this.closest('[x-data]')._x_dataStack[0].id}/`"
-                        hx-trigger="click delay:500ms"
-                        hx-target="#notes-container"
-                        hx-select="#notes-container"
-                        hx-select-oob="#notes-total"
-                        hx-swap="outerHTML"
-                        x-on:click="confirmModalShow = false"
-                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                        Yes, I'm sure
-                    </button>
-                    <button type="button"
-                        x-on:click="confirmModalShow = false; noteModalShow = true"
-                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                        No, cancel</button>
+                    <span class="flex space-x-4">
+                        <button id="note_delete_btn" type="button"
+                            hx-delete="/"
+                            hx-on::config-request="event.detail.path = `note/${this.closest('[x-data]')._x_dataStack[0].id}/`"
+                            hx-trigger="click delay:100ms"
+                            hx-target="#notes-container"
+                            hx-select="#notes-container"
+                            hx-select-oob="#notes-total,#pagination"
+                            hx-swap="outerHTML"
+                            hx-push-url="true"
+                            x-on:click="confirmModalShow = false"
+                            class="w-full flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-red-900 text-[--text-light] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            Yes, I'm sure
+                        </button>
+                        <button type="button"
+                            x-on:click="confirmModalShow = false; noteModalShow = true"
+                            class="w-full p-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                            No, cancel
+                        </button>
+                    </span>
+                    
                 </div>
             </div>
         </div>
@@ -292,17 +396,15 @@
             selectedTotal: 0,
             allSelected: false,
             selectedNotesIds: new Array(),
-            
-            searchQuery: new URLSearchParams(window.location.search).get('search'),
 
             setNote(event) {
                 let closestLinkElem = event.target.closest('a');
                 this.id = closestLinkElem.dataset.noteId;
                 this.title = closestLinkElem.querySelector('[data-note-title]').dataset.noteTitle;
                 this.content = closestLinkElem.querySelector('[data-note-content]').dataset.noteContent;
-                if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'True') {
+                if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'true') {
                     this.completed = true;
-                } else if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'False') {
+                } else if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'false') {
                     this.completed = false;
                 }
                 this.createdAt = closestLinkElem.querySelector('[data-note-created-at]').dataset.noteCreatedAt;
