@@ -23,11 +23,10 @@ def home(request):
     notes = Note.objects.filter(
         author=request.user).order_by('-updated_at')
     # if search param in url
-    if request.GET.get('search', False):
-        query = request.GET.get('search', False)
-        if query:
-            sleep(0.1)
-            notes = notes.filter(title__icontains=query)
+    query = request.GET.get('search', False)
+    if query:
+        sleep(0.1)
+        notes = notes.filter(title__icontains=query)
     # return all notes for user
 
     # setup pagination
@@ -46,7 +45,8 @@ def home(request):
                                                             on_each_side=3,
                                                             on_ends=1)
     context['notes'] = notes
-    # add template
+    context['search'] = query
+    # template
     template_name = 'note/home.html'
     return render(request, template_name, context)
 
