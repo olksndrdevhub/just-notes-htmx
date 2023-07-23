@@ -62,9 +62,10 @@
             <button 
                 hx-post="{% url 'bulk_notes_view' %}"
                 hx-target="#notes-container"
-                hx-select="#notes-container"
+                hx-select="#notes-container,#pagination"
                 hx-include="[name='selected-notes-ids']"
                 hx-swap="outerHTML"
+                hx-push-url="true"
                 x-on:click="multipleSelectActive = false; $nextTick(() => {selectAllNotes(reset=true)})"
                 class="w-auto flex justify-center p-4 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 Change Status
@@ -77,8 +78,9 @@
                 hx-target="#notes-container"
                 hx-select="#notes-container"
                 hx-include="[name='selected-notes-ids'], [name='bulk-notes-action']"
-                hx-select-oob="#notes-total"
+                hx-select-oob="#notes-total,#pagination"
                 hx-swap="outerHTML"
+                hx-push-url="true"
                 x-on:click="multipleSelectActive = false; $nextTick(() => {selectAllNotes(reset=true)})"
                 class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-red-900 text-[--text-light] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                 Delete Selected
@@ -128,8 +130,8 @@
                     <p data-note-content="{{note.content}}" class="font-normal text-[--text-secondary]">{{ note.content|truncatechars:100 }}</p>
                     <span class="flex justify-between">
                         <!-- <p data-note-created-at="" class="hidden">{{ note.created_at }}</p> -->
-                        <p data-note-completed="{{note.completed}}" data-note-created-at="{{note.created_at}}" data-note-updated-at="{{note.updated_at}}" class="font-normal text-xs text-[--text-minor]">Updated: {{ note.updated_at }}</p>
-                        {% if note.completed %}
+                        <p {% if note.completed_at %}data-note-completed="true"{% else %}data-note-completed="false"{% endif %} data-note-created-at="{{note.created_at}}" data-note-updated-at="{{note.updated_at}}" class="font-normal text-xs text-[--text-minor]">Updated: {{ note.updated_at }}</p>
+                        {% if note.completed_at %}
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-green-700">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>  
@@ -292,7 +294,7 @@
                                 hx-post="{% url 'note_view' %}"
                                 hx-target="#notes-container"
                                 hx-select="#notes-container"
-                                hx-select-oob="#notes-total"
+                                hx-select-oob="#notes-total,#pagination"
                                 hx-swap="outerHTML"
                                 x-on:click="noteModalShow = false"
                                 >Save</button>
@@ -379,9 +381,9 @@
                 this.id = closestLinkElem.dataset.noteId;
                 this.title = closestLinkElem.querySelector('[data-note-title]').dataset.noteTitle;
                 this.content = closestLinkElem.querySelector('[data-note-content]').dataset.noteContent;
-                if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'True') {
+                if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'true') {
                     this.completed = true;
-                } else if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'False') {
+                } else if (closestLinkElem.querySelector('[data-note-completed]').dataset.noteCompleted === 'false') {
                     this.completed = false;
                 }
                 this.createdAt = closestLinkElem.querySelector('[data-note-created-at]').dataset.noteCreatedAt;

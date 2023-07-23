@@ -2,6 +2,7 @@ from time import sleep
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
 
 from note.models import Note
 
@@ -83,9 +84,9 @@ def note_view(request):
                     # set completed status
                     if (data.get('completed', None) is not None
                             and data.get('completed')) == 'on':
-                        note.completed = True
+                        note.completed_at = timezone.now()
                     else:
-                        note.completed = False
+                        note.completed = None
                     note.save()
                     messages.add_message(request, messages.SUCCESS,
                                          'Your Note updated!')
@@ -105,7 +106,7 @@ def note_view(request):
                 # set completed status
                 if (data.get('completed', None) is not None
                         and data.get('completed')) == 'on':
-                    new_note.completed = True
+                    new_note.completed_at = timezone.now()
                 new_note.save()
                 messages.add_message(request, messages.SUCCESS,
                                      'New Note added!')
@@ -172,10 +173,10 @@ def bulk_notes_view(request):
             for note_id in selected_notes_ids:
                 try:
                     note = Note.objects.get(id=note_id)
-                    if note.completed:
-                        note.completed = False
+                    if note.is_completed:
+                        note.completed_at = None
                     else:
-                        note.completed = True
+                        note.completed_at = timezone.now()
                     note.save()
                 except (Note.DoesNotExist, Note.MultipleObjectsReturned):
                     messages.add_message(request, messages.ERROR,
