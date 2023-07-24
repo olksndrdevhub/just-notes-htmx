@@ -20,7 +20,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>                   
             </button> -->
-            <input type="text" name="search" id="search" placeholder="Type to search..." {% if search %}value="{{ search }}"{% endif %}
+            <input type="text" name="search" id="search" placeholder="Type to search..." x-model="searchQuery"
                 class="w-full flex justify-center mt-2 md:mt-0 p-3 rounded-lg rounded-r-none bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none"
                 hx-get="{% url 'home_view' %}"
                 hx-trigger="keyup changed delay:500ms"
@@ -349,7 +349,7 @@
                             hx-select-oob="#notes-total,#pagination"
                             hx-swap="outerHTML"
                             hx-push-url="true"
-                            x-on:click="confirmModalShow = false"
+                            x-on:click="confirmModalShow = false;searchQuery = ''"
                             class="w-full flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-red-900 text-[--text-light] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                             Yes, I'm sure
                         </button>
@@ -386,6 +386,8 @@
             completed: false,
             createdAt: '',
             updatedAt: '',
+
+            searchQuery: new URLSearchParams(window.location.search).get('search'),
 
             noteModalShow: false,
             noteAction: 'update',
