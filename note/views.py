@@ -61,6 +61,7 @@ def home(request):
     context['notes'], context['page_range'] = get_paginated_query(notes, request)
 
     context['search'] = query
+    context['uncompleted'] = uncompleted
     # template
     template_name = 'note/home.html'
     return render(request, template_name, context)

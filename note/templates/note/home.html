@@ -175,6 +175,8 @@
                         <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer hover:bg-[--secondary-dark]"
                             {% if search %}
                                 hx-get="?search={{ search }}&page={{ notes.previous_page_number }}"
+                            {% elif uncompleted %}
+                                hx-get="?uncompleted=on&page={{ notes.previous_page_number }}"
                             {% else %}
                                 hx-get="?page={{ notes.previous_page_number }}"
                             {% endif %}
@@ -212,6 +214,8 @@
                                 <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer hover:bg-[--secondary-dark]"
                                     {% if search %}
                                         hx-get="?search={{ search }}&page={{ i }}"
+                                    {% elif uncompleted %}
+                                        hx-get="?uncompleted=on&page={{ i }}"
                                     {% else %}
                                         hx-get="?page={{ i }}"
                                     {% endif %}
@@ -231,6 +235,8 @@
                         <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--secondary] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer hover:bg-[--secondary-dark]"
                             {% if search %}
                                 hx-get="?search={{ search }}&page={{ notes.next_page_number }}"
+                            {% elif uncompleted %}
+                                hx-get="?uncompleted=on&page={{ notes.next_page_number }}"
                             {% else %}
                                 hx-get="?page={{ notes.next_page_number }}"
                             {% endif %}
