@@ -10,9 +10,9 @@
 {% block content %}
 <div class="px-[2vw]"
     x-data="note">
-    <span class="flex flex-wrap mb-5 col justify-between items-center">
-        <h2 class="font-bold text-2xl md:order-1">Your Notes</h2>
-        <span class="flex order-3 w-full md:w-[50vw] md:order-2">
+    <span class="flex flex-wrap mb-5 justify-between items-center">
+        <h2 class="font-bold text-2xl md:order-1 w-1/3 md:w-auto">Your Notes</h2>
+        <span class="flex order-4 w-3/4 md:w-2/4 md:order-2">
             <!-- <button
                 x-on:click=""
                 class="w-auto flex justify-center sm:ml-3 mt-2 sm:mt-0 p-4 rounded-lg bg-[--secondary] hover:cursor-pointer">
@@ -21,7 +21,7 @@
                 </svg>                   
             </button> -->
             <input type="text" name="search" id="search" placeholder="Type to search..." x-model="searchQuery"
-                class="w-full flex justify-center mt-2 md:mt-0 p-3 rounded-lg rounded-r-none bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none"
+                class="w-full flex justify-center md:mt-0 p-3 rounded-lg rounded-r-none bg-[--background-secondary] hover:cursor-pointer focus-visible:outline-none"
                 hx-get="{% url 'home_view' %}"
                 hx-trigger="keyup changed delay:500ms"
                 hx-target="#notes-container"
@@ -33,14 +33,22 @@
                 hx-push-url="true"
                 >
             <!-- <img id="indicator" class="w-auto flex justify-center p-4 rounded-lg rounded-l-none bg-[--secondary]" src="/spinner.gif"/> -->
-            <span class="w-auto flex justify-center mt-2 md:mt-0 p-4 rounded-lg rounded-l-none bg-[--background-secondary]">
+            <span class="w-auto flex justify-center md:mt-0 p-4 rounded-lg rounded-l-none bg-[--background-secondary]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 htmx-indicator animate-spin stroke-[--accent]" id="indicator">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                 </svg>
             </span>
         </span>
-        <span class="bg-[--background-secondary] p-3 rounded-lg md:order-3">
-            <p id="notes-total" class="text-2xl text-[--text-minor]">Total: <strong class="text-[--text-secondary] font-semibold">{{ notes.paginator.count }}</strong></p>
+        <span class="flex justify-center order-2 md:order-3 p-3 w-2/3 md:w-1/4">
+            <label class="relative inline-flex items-center cursor-pointer mt-1.5">
+                <!-- <span class="ml-3 text-sm font-medium text-[--text-minor] peer-checked:text-[--text]">Show all</span> -->
+                <input type="checkbox" value="" class="sr-only peer">
+                <div class="w-11 h-6 bg-[--background-secondary] rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-[--secondary] peer-checked:after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[--accent]"></div>
+                <span before="Show All" class="ml-3 text-sm font-medium text-[--text-minor] peer-checked:text-[--text] before:content-['Show_All'] peer-checked:before:content-['Show_Uncompleted']"></span>
+            </label>
+        </span>
+        <span class=" p-3 rounded-lg order-3 md:order-4 w-1/4 md:w-fit">
+            <p id="notes-total" class="text-md md:text-2xl text-[--text-minor]">Total: <strong class="text-[--text-secondary] font-semibold">{{ notes.paginator.count }}</strong></p>
         </span>
     </span>
     <div x-cloak x-show="multipleSelectActive" class="bg-[--background-secondary] flex mb-5 p-3 rounded-lg justify-between sm:items-center">

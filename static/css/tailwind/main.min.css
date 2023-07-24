@@ -547,8 +547,14 @@ video {
 .z-50 {
   z-index: 50;
 }
+.order-2 {
+  order: 2;
+}
 .order-3 {
   order: 3;
+}
+.order-4 {
+  order: 4;
 }
 .-mx-1 {
   margin-left: -0.25rem;
@@ -601,6 +607,12 @@ video {
 }
 .mr-3 {
   margin-right: 0.75rem;
+}
+.mt-1 {
+  margin-top: 0.25rem;
+}
+.mt-1\.5 {
+  margin-top: 0.375rem;
 }
 .mt-2 {
   margin-top: 0.5rem;
@@ -656,14 +668,29 @@ video {
 .min-h-\[80vh\] {
   min-height: 80vh;
 }
+.w-1\/3 {
+  width: 33.333333%;
+}
+.w-1\/4 {
+  width: 25%;
+}
 .w-10 {
   width: 2.5rem;
+}
+.w-11 {
+  width: 2.75rem;
 }
 .w-16 {
   width: 4rem;
 }
+.w-2\/3 {
+  width: 66.666667%;
+}
 .w-3 {
   width: 0.75rem;
+}
+.w-3\/4 {
+  width: 75%;
 }
 .w-4 {
   width: 1rem;
@@ -710,6 +737,9 @@ video {
 }
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 .resize-none {
   resize: none;
@@ -796,6 +826,9 @@ video {
 }
 .rounded {
   border-radius: 0.25rem;
+}
+.rounded-full {
+  border-radius: 9999px;
 }
 .rounded-lg {
   border-radius: 0.5rem;
@@ -1054,6 +1087,61 @@ video {
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+.before\:content-\[\'Show_All\'\]::before {
+  --tw-content: 'Show All';
+  content: var(--tw-content);
+}
+.after\:absolute::after {
+  content: var(--tw-content);
+  position: absolute;
+}
+.after\:left-\[2px\]::after {
+  content: var(--tw-content);
+  left: 2px;
+}
+.after\:top-0::after {
+  content: var(--tw-content);
+  top: 0px;
+}
+.after\:top-0\.5::after {
+  content: var(--tw-content);
+  top: 0.125rem;
+}
+.after\:h-5::after {
+  content: var(--tw-content);
+  height: 1.25rem;
+}
+.after\:w-5::after {
+  content: var(--tw-content);
+  width: 1.25rem;
+}
+.after\:rounded-full::after {
+  content: var(--tw-content);
+  border-radius: 9999px;
+}
+.after\:border::after {
+  content: var(--tw-content);
+  border-width: 1px;
+}
+.after\:border-gray-300::after {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+.after\:bg-\[--secondary\]::after {
+  content: var(--tw-content);
+  background-color: var(--secondary);
+}
+.after\:transition-all::after {
+  content: var(--tw-content);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.after\:content-\[\'\'\]::after {
+  --tw-content: '';
+  content: var(--tw-content);
+}
 .checked\:opacity-100:checked {
   opacity: 1;
 }
@@ -1113,6 +1201,31 @@ video {
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
+}
+.peer:checked ~ .peer-checked\:bg-\[--accent\] {
+  background-color: var(--accent);
+}
+.peer:checked ~ .peer-checked\:text-\[--text\] {
+  color: var(--text);
+}
+.peer:checked ~ .peer-checked\:before\:content-\[\'Show_Uncompleted\'\]::before {
+  --tw-content: 'Show Uncompleted';
+  content: var(--tw-content);
+}
+.peer:checked ~ .peer-checked\:after\:translate-x-full::after {
+  content: var(--tw-content);
+  --tw-translate-x: 100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.peer:checked ~ .peer-checked\:after\:border-white::after {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+.peer:checked ~ .peer-checked\:after\:bg-white::after {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 @media (prefers-color-scheme: dark) {
 
@@ -1241,6 +1354,10 @@ video {
     order: 3;
   }
 
+  .md\:order-4 {
+    order: 4;
+  }
+
   .md\:ml-0 {
     margin-left: 0px;
   }
@@ -1257,12 +1374,21 @@ video {
     display: none;
   }
 
-  .md\:w-\[50vw\] {
-    width: 50vw;
+  .md\:w-1\/4 {
+    width: 25%;
+  }
+
+  .md\:w-2\/4 {
+    width: 50%;
   }
 
   .md\:w-auto {
     width: auto;
+  }
+
+  .md\:w-fit {
+    width: -moz-fit-content;
+    width: fit-content;
   }
 
   .md\:grid-cols-3 {
@@ -1292,6 +1418,11 @@ video {
   .md\:px-\[30vw\] {
     padding-left: 30vw;
     padding-right: 30vw;
+  }
+
+  .md\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
 @media (min-width: 1024px) {
