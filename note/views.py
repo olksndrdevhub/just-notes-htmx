@@ -52,8 +52,11 @@ def home(request):
     if query:
         sleep(0.1)
         notes = notes.filter(title__icontains=query)
-    # return all notes for user
-
+    # filter by is_completed status
+    uncompleted = request.GET.get('uncompleted', False)
+    if uncompleted == 'on':
+        sleep(0.1)
+        notes = notes.filter(completed_at__isnull=True)
     # get pagination
     context['notes'], context['page_range'] = get_paginated_query(notes, request)
 
