@@ -42,7 +42,17 @@
         <span class="flex justify-center order-2 md:order-3 p-3 w-2/3 md:w-1/4">
             <label class="relative inline-flex items-center cursor-pointer mt-1.5">
                 <!-- <span class="ml-3 text-sm font-medium text-[--text-minor] peer-checked:text-[--text]">Show all</span> -->
-                <input type="checkbox" value="" class="sr-only peer">
+                <input type="checkbox" class="sr-only peer" name="uncompleted"
+                    hx-get="{% url 'home_view' %}"
+                    hx-trigger="click"
+                    hx-target="#notes-container"
+                    hx-select="#notes-container"
+                    hx-select-oob="#notes-total,#pagination"
+                    hx-swap="outerHTML"
+                    hx-indicator="#indicator"
+                    hx-push-url="true"
+                    x-bind:checked="uncompleted==='on' ? true : false"
+                    >
                 <div class="w-11 h-6 bg-[--background-secondary] rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-[--secondary] peer-checked:after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[--accent]"></div>
                 <span before="Show All" class="ml-3 text-sm font-medium text-[--text-minor] peer-checked:text-[--text] before:content-['Show_All'] peer-checked:before:content-['Show_Uncompleted']"></span>
             </label>
@@ -396,6 +406,7 @@
             updatedAt: '',
 
             searchQuery: new URLSearchParams(window.location.search).get('search'),
+            uncompleted: new URLSearchParams(window.location.search).get('uncompleted'),
 
             noteModalShow: false,
             noteAction: 'update',
