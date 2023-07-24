@@ -24,8 +24,8 @@
     {% block additional_css %}{% endblock additional_css %}
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-[--background] text-[--text]"
-    x-data="{showMenu: false}"
-    x-init="showMenu=window.innerWidth > 768"
+    x-data="{showMenu: false, darkTheme: false}"
+    x-init="showMenu = window.innerWidth > 768; darkTheme = localStorage.getItem('theme') == 'theme-dark' ? true : false;"
     x-on:resize.window="window.innerWidth > 768 ? showMenu = true : showMenu = false"
     >
     <header class="">
@@ -116,7 +116,13 @@
                                 </li>
                             </a>
                         {% endif %}
-                        <li x-on:click="toggleTheme()" x-transition class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
+                        <li 
+                            x-on:click="
+                                toggleTheme();
+                                darkTheme=!darkTheme;
+                            " 
+                            x-transition 
+                            class="p-2 md:p-4 rounded-lg bg-[--secondary] hover:bg-[--secondary-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer">
                             <a class=""
                                 >
                                 <span class="flex max-md:justify-center" id="theme-switcher-span">
