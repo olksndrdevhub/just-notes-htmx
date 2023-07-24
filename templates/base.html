@@ -29,7 +29,7 @@
     x-init="showMenu = window.innerWidth > 768; darkTheme = localStorage.getItem('theme') == 'theme-dark' ? true : false;"
     x-on:resize.window="window.innerWidth > 768 ? showMenu = true : showMenu = false"
     >
-    <header class="">
+    <header class="" id="header">
         <nav class="flex justify-between p-3 rounded-lg bg-[--background-secondary] z-20 my-4 top-4 mx-[5vw]">
             <div class="flex flex-wrap justify-between w-full">
                 <a href="{% url 'home_view' %}" class="hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer text-[--accent] self-center flex items-center">
