@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="px-[10vw] sm:px-[20vw] md:px-[30vw]">
-    <h1 class="font-bold text-3xl mb-5 text-center">Your Profile</h1>
+    <h1 class="font-bold text-[--text-minor] text-3xl mb-5 text-center">Your Profile</h1>
     <form
         id="profile-form"
         action="#"
@@ -58,6 +58,7 @@
             x-bind:class="edit ? 'flex' : 'hidden'"
             hx-post="{% url 'profile_view' %}"
             hx-select="#profile-form"
+            hx-select-oob="#userNameNavBtnP"
             hx-target="#profile-form"
             hx-swap="outerHTML">
             <span class="flex">

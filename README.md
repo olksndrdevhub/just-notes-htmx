@@ -2,7 +2,12 @@
 
 ## Simple Notes App
 
-## Live: [just-notes.fly.dev](https://just-notes.fly.dev/) (deployed with [Fly.io](https//:fly.io))
+Light Theme            |  Dark Theme
+:-------------------------:|:-------------------------:
+![screenshot_1](./screenshots/desktop_light.png)  |  ![screenshot_1](./screenshots/desktop_dark.png)
+
+
+## Deployed with [Fly.io](https//:fly.io) - [just-notes.fly.dev/](https://just-notes.fly.dev/)
 
 ### Created using Django, HTMX, Alpine.js, TailwindCSS
 
@@ -24,7 +29,7 @@
         - [x] Bulk Change 'Completed' Status on selected Notes
     - [x] Pagination
     - [x] Live Search
-    - [ ] Filter by `is_completed` status
+    - [x] Filter by `is_completed` status
 - [x] Toasts Application to show Django Messages with HTMX
     - [x] Auto-dismissed Toasts
     - [x] Manual Toast dismiss

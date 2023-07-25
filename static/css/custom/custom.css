@@ -27,12 +27,12 @@
     --text-minor: #bdbdbd;
     --text-light: #f0f0f0;
     --text-dark: #080703;
-    --background: #050505;
-    --background-secondary: #111111;
+    --background: #2e2c54;
+    --background-secondary: #242247;
     --primary: #85b03b;
-    --secondary: #171d0c;
-    --secondary-dark: #212a11;
-    --accent: #8c53c6;
+    --secondary: #393760;
+    --secondary-dark: #4d4b70;
+    --accent: #8871e6;
 }
 body {
     font-family: 'Exo 2', sans-serif;
