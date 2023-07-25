@@ -192,7 +192,7 @@
                             </svg>                              
                         </li>
                     {% else %}
-                        <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--background] text-[--text-minor] hover:cursor-default">
+                        <li class="w-auto flex justify-center py-2 px-4 rounded-lg text-[--text-minor] hover:cursor-default">
                             <span class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -202,12 +202,12 @@
                     {% endif %}
                     {% for i in page_range|default_if_none:notes.paginator.get_elided_page_range %}
                         {% if i == notes.paginator.ELLIPSIS %}
-                            <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--background-secondary] text-[--text-minor] hover:cursor-default" aria-current="page">
+                            <li class="w-auto flex justify-center py-2 px-4 rounded-lg text-[--text-minor] hover:cursor-default" aria-current="page">
                                 <span class="">{{ i }}</span>
                             </li>
                         {% else %}
                             {% if notes.number == i %}
-                                <li class="w-auto flex justify-center py-2 px-4 rounded-lg bg-[--background] text-[--text-minor] hover:cursor-default" aria-current="page">
+                                <li class="w-auto flex justify-center py-2 px-4 rounded-lg text-[--text-minor] hover:cursor-default" aria-current="page">
                                     <span class="">{{ i }}</span>
                                 </li>
                             {% else %}
@@ -252,7 +252,7 @@
                             </svg>  
                         </li>
                     {% else %}
-                        <li class="w-auto flex justify-center sm:ml-3 py-2 px-4 rounded-lg bg-[--background] text-[--text-minor] hover:cursor-default">
+                        <li class="w-auto flex justify-center sm:ml-3 py-2 px-4 rounded-lg text-[--text-minor] hover:cursor-default">
                             <span class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
