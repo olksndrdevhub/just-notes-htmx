@@ -2,10 +2,12 @@
 
 ## Simple Notes App
 
-![screenshot_1](./screenshots/desktop_light.png)
-![screenshot_1](./screenshots/desktop_dark.png)
+Light Theme            |  Dark Theme
+:-------------------------:|:-------------------------:
+![screenshot_1](./screenshots/desktop_light.png)  |  ![screenshot_1](./screenshots/desktop_dark.png)
 
-## Deployed with [Fly.io](https//:fly.io) - [just-notes.fly.dev/](https://just-notes.fly.dev/)
+
+## Deployed with [Fly.io](https//:fly.io) - [just-notes.fly.dev](https://just-notes.fly.dev/)
 
 ### Created using Django, HTMX, Alpine.js, TailwindCSS
 
