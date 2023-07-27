@@ -1,9 +1,11 @@
-from django_htmx.http import HttpResponseClientRedirect
+from django_htmx.http import HttpResponseClientRedirect, reswap, trigger_client_event
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponse
+from django.contrib.auth.password_validation import validate_password
 
 from .models import NoteUser
 
@@ -16,45 +18,105 @@ def profile_view(request):
     context = {}
     template_name = 'profile.html'
 
-    if request.htmx:
-        # update user profile
-        data = request.POST
-        user = request.user
-        if 'email' in data:
+    # update user profile
+    data = request.POST
+    user = request.user
+    print(data)
+
+    # update password if needed
+    if 'currentPassword' in request.POST:
+        # check if currentPassword is valid
+        if user and user.check_password(request.POST.get('currentPassword')):
+            # check if new password matched with confirmation
+            if request.POST.get('password') != request.POST.get('password2'):
+                # return an error if not matched
+                messages.add_message(request, messages.ERROR,
+                                     "Passwords didn't match!")
+                response = render(request, template_name, context)
+                response = reswap(response, 'none')
+                response = trigger_client_event(
+                    response,
+                    "passwordValidation",
+                    {"result": "error",
+                     "fieldsIds": ['password', 'password2']},
+                    after='swap')
+                return response
             try:
-                # check if user with provided email exist
-                match_user = NoteUser.objects.get(email=data['email'])
-                # if user exist and are not the same user -> error
-                # else if users are the same - we didn't need to update email
-                if match_user and match_user.id is not user.id:
-                    messages.add_message(
-                        request,
-                        messages.ERROR,
-                        f'Error: email {data["email"]} already used...'
-                    )
-                    return render(request, template_name, context)
-            # if muptiple users finded with provided email -> eror
-            except NoteUser.MultipleObjectsReturned:
+                # try to validate a password
+                validate_password(request.POST.get('password'))
+            except forms.ValidationError as errors:
+                # return errors if password not valid
+                for error in errors:
+                    messages.add_message(request, messages.ERROR, f'Error: {error}')
+                response = render(request, template_name, context)
+                response = reswap(response, 'none')
+                response = trigger_client_event(
+                    response,
+                    "passwordValidation",
+                    {"result": "error",
+                     "fieldsIds": ['password', 'password2']},
+                    after='swap')
+                return response
+            # update password for user
+            user.set_password(request.POST.get('password'))
+            # add success message
+            messages.add_message(request, messages.SUCCESS, "Password changed!")
+        else:
+            # return error if currentPassword is not valid
+            messages.add_message(request, messages.ERROR,
+                                 "Invalid current password!")
+            response = render(request, template_name, context)
+            response = reswap(response, 'none')
+            response = trigger_client_event(
+                response,
+                "passwordValidation",
+                {"result": "error",
+                 "fieldsIds": ['currentPassword']},
+                after='swap'
+            )
+            return response
+
+    if 'email' in data:
+        try:
+            # check if user with provided email exist
+            match_user = NoteUser.objects.get(email=data['email'])
+            # if user exist and are not the same user -> error
+            # else if users are the same - we didn't need to update email
+            if match_user and match_user.id is not user.id:
                 messages.add_message(
                     request,
                     messages.ERROR,
                     f'Error: email {data["email"]} already used...'
                 )
                 return render(request, template_name, context)
-            except NoteUser.DoesNotExist:
-                # email not used, can be saved for user
-                user.email = data['email']
+        # if muptiple users finded with provided email -> eror
+        except NoteUser.MultipleObjectsReturned:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                f'Error: email {data["email"]} already used...'
+            )
+            return render(request, template_name, context)
+        except NoteUser.DoesNotExist:
+            # email not used, can be saved for user
+            user.email = data['email']
 
         if 'first_name' in data:
             user.first_name = data['first_name']
         if 'last_name' in data:
             user.last_name = data['last_name']
         user.save()
-
         messages.add_message(request, messages.SUCCESS,
                              'Profile updated!')
 
-    return render(request, template_name, context)
+    response = render(request, template_name, context)
+    response = trigger_client_event(
+        response,
+        "passwordValidation",
+        {"result": "success"},
+        after='swap'
+    )
+    return response
 
 
 def logout_view(request):

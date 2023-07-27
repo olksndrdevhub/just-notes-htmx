@@ -5,13 +5,15 @@
 {% endblock title %}
 
 {% block content %}
-<div class="px-[10vw] sm:px-[20vw] md:px-[30vw]">
+<div class="px-[10vw] sm:px-[20vw] md:px-[30vw]"
+id="profilePageStateElem"
+    x-data="{edit: false, changePassword: false, password: '', password2: '', currentPassword: ''}">
     <h1 class="font-bold text-[--text-minor] text-3xl mb-5 text-center">Your Profile</h1>
     <form
         id="profile-form"
         action="#"
-        class="flex flex-col space-y-5 mb-2"
-        x-data="{edit: false}">
+        class="flex flex-col space-y-5 mb-5"
+        >
         <span class="flex flex-col space-y-3">
             <label for="first_name">First name</label>
             <input required type="text" name="first_name" id="first_name"
@@ -43,11 +45,11 @@
         </span> -->
         <a type="button" 
             class="flex justify-center w-full p-4 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
-            x-on:click="edit=true"
+            x-on:click="edit=true;changePassword=false"
             x-cloak
             x-show="!edit">
             <span class="flex">
-                Edit
+                Edit Profile
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                 </svg> 
@@ -56,6 +58,8 @@
         <a type="submit" 
             class="justify-center w-full p-4 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
             x-bind:class="edit ? 'flex' : 'hidden'"
+            x-cloak
+            x-on:htmx:after-swap.window="edit=false"
             hx-post="{% url 'profile_view' %}"
             hx-select="#profile-form"
             hx-select-oob="#userNameNavBtnP"
@@ -71,7 +75,70 @@
         <a type="button" 
             class="justify-center w-full p-4 rounded-lg bg-[--secondary] text-[--text] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
             x-on:click="edit=false"
-            x-bind:class="edit ? 'flex' : 'hidden'">
+            x-bind:class="edit ? 'flex' : 'hidden'"
+            x-cloak>
+            <span class="flex">
+                Cancel
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                </svg>
+            </span>
+        </a>
+    </form>
+    
+    <span x-show="!edit" x-cloak class="text-center">
+        <h2 class="text-xl">Or</h2>
+    </span>
+
+    <a type="button" id="changePasswordButton"
+        class="flex mt-5 justify-center w-full p-4 rounded-lg bg-[--secondary] text-[--text] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
+        x-on:click="changePassword=true;console.log(changePassword, edit)"
+        x-cloak
+        x-show="!changePassword&&!edit">
+        <span class="flex">
+            Change Password
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+        </span>
+    </a>
+    <form 
+        id="changePasswordForm"
+        action="#"
+        x-cloak
+        x-show="changePassword&&!edit"
+        class="mt-10 flex flex-col space-y-5 mb-2"
+        >
+        <span class="flex flex-col space-y-3">
+            <label for="password">Current password</label>
+            <input required x-model="currentPassword" type="password" name="currentPassword" id="currentPassword" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-secondary] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">
+        </span>
+        <span class="flex flex-col space-y-3">
+            <label for="password">New password</label>
+            <input required x-model="password" type="password" name="password" id="password" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-secondary] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">
+        </span>
+        <span class="flex flex-col space-y-3">
+            <label for="password">New password again</label>
+            <input required type="password" x-model="password2" name="password2" id="password2" class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-secondary] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600">
+        </span>
+        <a type="button"
+            class="flex justify-center w-full p-4 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
+            hx-post="{% url 'profile_view' %}"
+            hx-select="#changePasswordButton"
+            hx-target="#changePasswordForm"
+            hx-swap="none"
+            >
+            <span class="flex">
+                Update Password
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+            </span>
+        </a>
+        <a type="button" 
+            class="flex justify-center w-full p-4 rounded-lg bg-[--secondary] text-[--text] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
+            x-on:click="changePassword=false"
+            x-cloak>
             <span class="flex">
                 Cancel
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
@@ -82,3 +149,36 @@
     </form>
 </div>
 {% endblock content %}
+
+{% block additional_javascript %}
+    <script>
+        function processServerSideValidationEvent(evt) {
+            if (evt.detail['result'] === 'error') {
+                // set an error class for each field
+                let errorFieldsIds = evt.detail['fieldsIds'];
+                errorFieldsIds.forEach((id) => {
+                    htmx.find(`#${id}`).classList += ' validation-error';
+                })
+                // remove error class from others filds if exists
+                htmx.findAll('.validation-error').forEach((el) => {
+                    if (!errorFieldsIds.includes(el.id)) {
+                        el.classList.remove('validation-error');
+                    }
+                })
+            } else if (evt.detail['result'] === 'success') {
+                let invalidInputs = htmx.findAll('.validation-error')
+                invalidInputs.forEach((elem) => {
+                    elem.classList.remove('validation-error');
+                })
+                htmx.find('#profilePageStateElem')._x_dataStack[0].changePassword = false;
+                htmx.find('#profilePageStateElem')._x_dataStack[0].currentPassword = '';
+                htmx.find('#profilePageStateElem')._x_dataStack[0].password = '';
+                htmx.find('#profilePageStateElem')._x_dataStack[0].password2 = '';
+            }
+        }
+
+        htmx.on("passwordValidation", (event) => {
+            processServerSideValidationEvent(event);
+        })
+    </script>
+{% endblock additional_javascript %}
