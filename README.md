@@ -30,6 +30,9 @@ Light Theme            |  Dark Theme
     - [x] Pagination
     - [x] Live Search
     - [x] Filter by `is_completed` status
+- [ ] Analytics Page (WIP):
+    - [x] Base Analytics about Completed Notes per Month
+    - [ ] ...
 - [x] Toasts Application to show Django Messages with HTMX
     - [x] Auto-dismissed Toasts
     - [x] Manual Toast dismiss
