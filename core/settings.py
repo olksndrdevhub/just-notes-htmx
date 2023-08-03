@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'htmx_messages',
     'user',
     'note',
+    'analytics',
 ]
 
 MIDDLEWARE = [
