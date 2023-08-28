@@ -57,9 +57,13 @@ def profile_view(request):
                     after='swap')
                 return response
             # update password for user
-            user.set_password(request.POST.get('password'))
-            # add success message
-            messages.add_message(request, messages.SUCCESS, "Password changed!")
+            if user.is_dummy:
+                messages.add_message(request, messages.WARNING,
+                                     "You can't change password for dummy user!")
+            else:
+                user.set_password(request.POST.get('password'))
+                # add success message
+                messages.add_message(request, messages.SUCCESS, "Password changed!")
         else:
             # return error if currentPassword is not valid
             messages.add_message(request, messages.ERROR,
@@ -97,8 +101,12 @@ def profile_view(request):
             )
             return render(request, template_name, context)
         except NoteUser.DoesNotExist:
-            # email not used, can be saved for user
-            user.email = data['email']
+            if user.is_dummy:
+                messages.add_message(request, messages.WARNING,
+                                     "You can't change email for dummy user!")
+            else:
+                # email not used, can be saved for user
+                user.email = data['email']
 
         if 'first_name' in data:
             user.first_name = data['first_name']

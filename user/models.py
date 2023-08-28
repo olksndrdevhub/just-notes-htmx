@@ -47,6 +47,9 @@ class NoteUser(AbstractUser):
     email_confirmed = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=255, blank=True, null=True)
 
+    # dummy user fields
+    is_dummy = models.BooleanField(default=False)
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 

@@ -9,6 +9,12 @@ Light Theme            |  Dark Theme
 
 ## Deployed with [Fly.io](https//:fly.io) - [just-notes.fly.dev](https://just-notes.fly.dev/)
 
+### Dummy Credentials:
+```
+email: dummy@mail.com
+password: dummypassword
+```
+
 ### Created using Django, HTMX, Alpine.js, TailwindCSS
 
 ### Functionality:
