@@ -21,7 +21,6 @@ def profile_view(request):
     # update user profile
     data = request.POST
     user = request.user
-    print(data)
 
     # update password if needed
     if 'currentPassword' in request.POST:
@@ -190,3 +189,10 @@ def register_view(request):
             return HttpResponseClientRedirect('/account/login/')
         return HttpResponse('Response')
     return render(request, tempalte_name, context)
+
+
+def hx_send_email_confirmation(request):
+    if request.htmx:
+        # TODO send an email
+        print('send email confirmation')
+    return HttpResponse('Success, check your email!')

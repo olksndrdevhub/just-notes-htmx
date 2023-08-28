@@ -33,16 +33,15 @@ id="profilePageStateElem"
             <input required type="email" name="email" id="email"
                 class="text-sm border-[--secondary] border-2 rounded-lg block w-full p-2.5 bg-[--background-secondary] placeholder-gray-600 hover:cursor-text disabled:cursor-not-allowed disabled:text-gray-600"
                 value="{{user.email}}"
-                x-bind:disabled="!edit">    
+                x-bind:disabled="!edit">
+                <!-- TODO uncomment when email confirmation will be done -->
+                <!-- {% if not user.email_confirmed %}
+                    <span id="email_confirmation_wrapper" class="email-not-verified text-[--text-minor] text-sm">
+                        Your email address is not confirmed.
+                        <span hx-get="{% url 'hx_send_email_confirmation' %}" hx-swap="innerHTML" hx-target="#email_confirmation_wrapper" class="text-[--accent] hover:cursor-pointer">Click here to send a confirmation mail!</span>
+                    </span>
+                {% endif %} -->
         </span>
-        <!-- <span class="flex flex-col space-y-3">
-            <label for="password">Password</label>
-            <input required type="password" name="password" id="password" class="text-sm rounded-lg block w-full p-2.5 bg-[--background] placeholder-gray-600hover:cursor-text">
-        </span>
-        <span class="flex flex-col space-y-3">
-            <label for="password">Password again</label>
-            <input required type="password" name="password2" id="password2" class="text-sm rounded-lg block w-full p-2.5 bg-[--background] placeholder-gray-600hover:cursor-text">
-        </span> -->
         <a type="button" 
             class="flex justify-center w-full p-4 rounded-lg bg-[--primary] text-[--text-dark] hover:origin-top hover:translate-y-[-3px] transition transform duration-200 ease-in-out hover:cursor-pointer"
             x-on:click="edit=true;changePassword=false"

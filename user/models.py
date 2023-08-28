@@ -44,6 +44,7 @@ class NoteUser(AbstractUser):
     """
     username = None
     email = models.EmailField(unique=True)
+    email_confirmed = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=255, blank=True, null=True)
 
     USERNAME_FIELD = "email"
