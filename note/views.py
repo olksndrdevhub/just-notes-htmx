@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.urls import reverse
+from django.db.models import Q
 
 from note.models import Note
 
@@ -51,7 +52,7 @@ def home(request):
     query = request.GET.get('search', False)
     if query:
         sleep(0.1)
-        notes = notes.filter(title__icontains=query)
+        notes = notes.filter(Q(title__icontains=query) | Q(content__icontains=query))
     # filter by is_completed status
     uncompleted = request.GET.get('uncompleted', False)
     if uncompleted == 'on':

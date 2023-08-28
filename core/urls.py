@@ -22,4 +22,5 @@ urlpatterns = [
 
     path('account/', include('user.urls')),
     path('', include('note.urls')),
+    path('', include('analytics.urls')),
 ]

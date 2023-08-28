@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="px-[5vw] sm:px-[10vw] md:px-[20vw]">
+      <h1 class="font-bold text-[--text-minor] text-3xl mb-5 text-center">Your Analytics about completed Notes</h1>
+      <canvas id="analyticsChart"></canvas>
+  </div>
+{% endblock content %}
+
+{% block additional_javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('analyticsChart');
+
+        document.addEventListener('DOMContentLoaded', () => {
+          fetch('{% url "analytics_get_data" %}')
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              const analiticsData = data;
+              console.log(analiticsData);
+              
+              const plugin = {
+                id: 'customCanvasBackgroundColor',
+                beforeDraw: (chart, args, options) => {
+                  const {ctx} = chart;
+                  ctx.save();
+                  ctx.globalCompositeOperation = 'destination-over';
+                  ctx.fillStyle = options.color || '#99ffff';
+                  ctx.fillRect(0, 0, chart.width, chart.height);
+                  ctx.restore();
+                }
+              };
+
+              new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: analiticsData.labels,
+                  datasets: [{
+                    label: '# of Completed Notes per Month',
+                    data: analiticsData.values,
+                    borderWidth: 2
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      max: analiticsData.maxValueY,
+                      ticks: {
+                        stepSize: 1
+                    },
+                      grid: {
+                        color: '#545454'
+                      }
+                    },
+                    x: {
+                      grid: {
+                        color: '#545454'
+                      }
+                    }
+                  },
+                  elements: {
+                    line: {
+                      
+                    }
+                  },
+                  //plugins: {
+                  //  customCanvasBackgroundColor: {
+                  //    color: '#8871e6',
+                  //  }
+                  //},
+                },
+                //plugins: [plugin],
+              });
+            })
+        })
+      </script>
+{% endblock additional_javascript %}

@@ -10,4 +10,5 @@ urlpatterns = [
     path('register/', views.register_view, name='register_view'),
     path("logout/", views.logout_view, name="logout_view"),
 
+    path('hx-send-email-confirmation/', views.hx_send_email_confirmation, name='hx_send_email_confirmation'),
 ]
